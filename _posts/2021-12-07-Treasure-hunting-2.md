@@ -15,7 +15,7 @@ feature_image: "https://picsum.photos/2560/600?image=872"
         });
     </script>
 </head>
-
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 ## Conditional Poisson Stochastic Beam Search1
 
 Today I'm going to introduce the paper '**Conditional Poisson Stochastic Beam Search**' by *Clara Meister*, *Afra Amini*, *Tim Viera*, and *Ryan Cotterell*, you can find the paper [[here]](https://arxiv.org/abs/2109.11034) 
