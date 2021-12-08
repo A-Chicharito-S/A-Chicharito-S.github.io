@@ -15,7 +15,8 @@ feature_image: "https://picsum.photos/2560/600?image=872"
         });
     </script>
 </head>
-## Conditional Poisson Stochastic Beam Search4
+
+## Conditional Poisson Stochastic Beam Search5
 
 Today I'm going to introduce the paper '**Conditional Poisson Stochastic Beam Search**' by *Clara Meister*, *Afra Amini*, *Tim Viera*, and *Ryan Cotterell*, you can find the paper [[here]](https://arxiv.org/abs/2109.11034) 
 
@@ -29,5 +30,5 @@ Note that: '**xxx**' means quoted from the paper; **xxx** is to underline; ***su
 
 **Beam search** is a very important decoding strategy for NLP tasks involving generation (e.g., NMT, text generation), they're usually done in the following way: 
 
-For example, we're going to generate a sentence with a vocabulary $\mathcal{V}={I, like, spring, <EOS>}$
+For example, we're going to generate a sentence with a vocabulary $\mathcal{V}={I, like, spring, EOS}$
 
