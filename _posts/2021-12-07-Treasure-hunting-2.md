@@ -16,7 +16,7 @@ feature_image: "https://picsum.photos/2560/600?image=872"
     </script>
 </head>
 
-## Conditional Poisson Stochastic Beam Search
+## Conditional Poisson Stochastic Beam Search1
 
 Today I'm going to introduce the paper '**Conditional Poisson Stochastic Beam Search**' by *Clara Meister*, *Afra Amini*, *Tim Viera*, and *Ryan Cotterell*, you can find the paper [[here]](https://arxiv.org/abs/2109.11034) 
 
@@ -41,29 +41,31 @@ $$\begin{split} \{BOS\} & \stackrel{step 1}{\longrightarrow}\{BOS+I={\color{red}
 \end{split}$$
 </div>
 
-Where '$+$' means appending the word after the sequence from previous step, and **for simplicity $BOS$ is removed after step 1**. And we can see that each step the preserved top-$K$ beams (with highest top-$K$ probability of being generated, marked <font color="red">red</font>) will have a possible extension over $\mathcal{V}$, generating $K\times |\mathcal{V}|$ candidates, and then top-$K$ high probability beams are selected then (in above case, at step 2, they are: '***I like***' and '***spring like***').
+Where '$+$' means appending the word after the sequence from previous step, and **for simplicity $BOS$ is removed after step 1**. And we can see that each step the preserved top-$K$ beams (with highest top-$K$ probability of being generated, marked <font color="red">red</font>) will have a possible extension over $\mathcal{V}$, generating $K\times \|\mathcal{V}\|$ candidates, and then top-$K$ high probability beams are selected then (in above case, at step 2, they are: '***I like***' and '***spring like***').
 
 - ***What's the drawbacks of beam search ? And can we solve them ?***
 
-With the above brief introduction about beam search, now we face a very tough question: ***What if the $K+1$-th beam at step $t$ is actually a better beam at step $t+1$ ?*** That means, by **deterministically** select top-$K$ best options out of $K\times |\mathcal{V}|$ at each time step, **we may lose some better candidates** ! And we of course want a generalized version of beam search, which can include beam search as a special case while has some **stochasticity**. $\longrightarrow$ and this leads to the answer: **by sampling !** Instead of deterministically choose top-$K$ beams at each time step, we **stochastically** sample a set with $K$ beams out of a base set with $K\times |\mathcal{V}|$ beams, and of cause a set with top-$K$ beams (in this sense, it means **beam search**) will still have a probability being sampled, thus we can say the **stochastic sampling strategy** is the generation of the **deterministic** beam search.
+With the above brief introduction about beam search, now we face a very tough question: ***What if the $K+1$-th beam at step $t$ is actually a better beam at step $t+1$ ?*** That means, by **deterministically** select top-$K$ best options out of $K\times \|\mathcal{V}\|$ at each time step, **we may lose some better candidates** ! And we of course want a generalized version of beam search, which can include beam search as a special case while has some **stochasticity**. $\longrightarrow$ and this leads to the answer: **by sampling !** Instead of deterministically choose top-$K$ beams at each time step, we **stochastically** sample a set with $K$ beams out of a base set with $K\times \|\mathcal{V}\|$ beams, and of cause a set with top-$K$ beams (in this sense, it means **beam search**) will still have a probability being sampled, thus we can say the **stochastic sampling strategy** is the generation of the **deterministic** beam search.
 
 - ***How the problem is formed ?***
 
 And the authors formulate the **beam search** problem as follows:
 
-the generation process can be written as:    $p(\textbf{y})=\prod \limits_{t=1}^{|\textbf{y}|}p(y_t|\textbf{y}_{<t})$
+the generation process can be written as:   
 
+<div>
+$$p(\textbf{y})=\prod \limits_{t=1}^{\|\textbf{y}\|}p(y_t|\textbf{y}_{<t})$$
+</div>
+    
 '**where $\textbf{y}$ is a member of a set of well-formed outputs $\mathcal{Y}$** '. And  $\textbf{y}=<y_1,\,y_2,\,...>$ where $y_k \in \mathcal{Y}$,  $\textbf{y}_{<t}=<y_1,\,y_2,\,...,y_{t-1},\,y_t>$. And in the following discussion, a max generation length $T$ for the sentence is considered.
 
 To solve the problem of  $\textbf{y}^{*}=\underset{y\in \mathcal{Y}}{argmax}\,\,log\,p(\textbf{y})$, the beam search is then formulated as:
     
-<div>
 $$\begin{eqnarray*}
 Y_0 &=& {<BOS>} \tag{1} \\
 Y_t &=& \underset{Y_t^{'}\subseteq B_t}{argmax}\,\,Q_t({Y_t^{'}}\,|\,Y_{t-1}) \tag{2} \\
 re&turn\,Y_T 
 \end{eqnarray*}$$
-</div>
     
 Where:
     
