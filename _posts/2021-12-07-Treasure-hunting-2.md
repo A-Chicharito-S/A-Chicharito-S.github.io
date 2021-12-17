@@ -35,8 +35,8 @@ For example, we're going to generate a sentence with a vocabulary $\mathcal{V}=\
 <div>
 $$\begin{split} \{BOS\} & \stackrel{step 1}{\longrightarrow}\{BOS+I={\color{red}0.6},BOS+like=0.1,BOS+spring={\color{red}0.3},BOS+EOS=0.0\} \\
 & \stackrel{step 2}{\longrightarrow}\{I+like={\color{red}0.6\times 0.9},I+I=0.6\times 0.05,I+spring=0.6\times 0.05,I\,+EOS=0.6\times 0.0; \\
-& \,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,spring+like={\color{red}0.3\times 0.8},spring+I=0.8\times 0.05,spring+spring=0.8\times 0.1, \\
-& \,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,spring\,+EOS=0.8\times 0.05;\} \\
+& \,\,\,\,\,\,\,\,\,\,\,\,\,\,\,spring+like={\color{red}0.3\times 0.8},spring+I=0.8\times 0.05,spring+spring=0.8\times 0.1, \\
+& \,\,\,\,\,\,\,\,\,\,\,\,\,\,\,spring\,+EOS=0.8\times 0.05;\} \\
 & \stackrel{step 3}{\longrightarrow}\,\,\,\,...
 \end{split}$$
 </div>
@@ -57,27 +57,27 @@ the generation process can be written as:
 $$p(\textbf{y})=\prod \limits_{t=1}^{\|\textbf{y}\|}p(y_t|\textbf{y}_{<t})$$
 </div>
     
-'**where $\textbf{y}$ is a member of a set of well-formed outputs $\mathcal{Y}$** '. And  $\textbf{y}=<y_1,\,y_2,\,...>$ where $y_k \in \mathcal{Y}$,  $\textbf{y}_{<t}=<y_1,\,y_2,\,...,y_{t-1},\,y_t>$. And in the following discussion, a max generation length $T$ for the sentence is considered.
+'**where $\textbf{y}$ is a member of a set of well-formed outputs $\mathcal{Y}$** '. And  $\textbf{y}=\textless y_1,\,y_2,\,... \textgreater$ where $y_k \in \mathcal{Y}$,  $\textbf{y}_{<t}=\textless y_1,\,y_2,\,...,y_{t-1},\,y_t \textgreater$. And in the following discussion, a max generation length $T$ for the sentence is considered.
 
 To solve the problem of  $\textbf{y}^{*}=\underset{y\in \mathcal{Y}}{argmax}\,\,log\,p(\textbf{y})$, the beam search is then formulated as:
     
 $$\begin{eqnarray*}
-Y_0 &=& {<BOS>} \tag{1} \\
-Y_t &=& \underset{Y_t^{'}\subseteq B_t}{argmax}\,\,Q_t({Y_t^{'}}\,|\,Y_{t-1}) \tag{2} \\
+Y_0 &=& {BOS} \tag{1} \\
+Y_t &=& \underset{Y_t^{'}\subseteq B_t}{argmax}\,\,Q_t({Y_t^{'}}\,\|\,Y_{t-1}) \tag{2} \\
 re&turn\,Y_T 
 \end{eqnarray*}$$
     
 Where:
     
 <div>
-$$Q_t(Y_t\,|\,Y_{t-1})\overset{def}{\propto}
+$$Q_t(Y_t\,\|\,Y_{t-1})\overset{def}{\propto}
 \begin{cases}
-\prod \limits_{n=1}^{N}w_n& \text{if\,\,\,|Y|=K}\\
+\prod \limits_{n=1}^{N}w_n& \text{if\,\,\,\|Y\|=K}\\
 0& \textbf{otherwise} 
 \end{cases}\qquad \qquad \qquad \qquad \qquad (3)$$
 </div>
 
-Note that $Q_t(Y_t\,|\,Y_{t-1})$ is only assigned value when $|Y_t|=K$, and the though the assigned value is written as $\prod \limits_{n=1}^{N}w_n$ , it actually means for those $w_n$'s belonging to the set $Y_t$ . For example, if $K=3,\,N=9$ and $\{w_1,\,w_4,\,w_5\}$ belongs to $Y_t$ ,  then $\prod \limits_{n=1}^{N}w_n$ indicates $w_1\times w_4\times w_5$ . <a name='2'></a>
+Note that $Q_t(Y_t\,\|\,Y_{t-1})$ is only assigned value when $\|Y_t\|=K$, and the though the assigned value is written as $\prod \limits_{n=1}^{N}w_n$ , it actually means for those $w_n$'s belonging to the set $Y_t$ . For example, if $K=3,\,N=9$ and $\{w_1,\,w_4,\,w_5\}$ belongs to $Y_t$ ,  then $\prod \limits_{n=1}^{N}w_n$ indicates $w_1\times w_4\times w_5$ . <a name='2'></a>
 
 And now let's continue to sort out some undefined concepts:
 
