@@ -57,7 +57,7 @@ the generation process can be written as:
 $$p(\textbf{y})=\prod \limits_{t=1}^{\|\textbf{y}\|}p(y_t|\textbf{y}_{<t})$$
 </div>
     
-'**where $\textbf{y}$ is a member of a set of well-formed outputs $\mathcal{Y}$** '. And  $\textbf{y}=\textless y_1,\,y_2,\,... \textgreater$ where $y_k \in \mathcal{Y}$,  $\textbf{y}_{<t}=\textless y_1,\,y_2,\,...,y_{t-1},\,y_t \textgreater$. And in the following discussion, a max generation length $T$ for the sentence is considered.
+'**where $\textbf{y}$ is a member of a set of well-formed outputs $\mathcal{Y}$** '. And  $\textbf{y}=\{y_1,\,y_2,\,... \}$ where $y_k \in \mathcal{Y}$,  $\textbf{y}_{\textless  t}=\{y_1,\,y_2,\,...,y_{t-1},\,y_t \}$. And in the following discussion, a max generation length $T$ for the sentence is considered.
 
 To solve the problem of  $\textbf{y}^{*}=\underset{y\in \mathcal{Y}}{argmax}\,\,log\,p(\textbf{y})$, the beam search is then formulated as:
     
