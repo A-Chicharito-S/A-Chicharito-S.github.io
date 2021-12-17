@@ -17,7 +17,7 @@ feature_image: "https://picsum.photos/2560/600?image=872"
 </head>
 
 
-After making a horrible mistake which makes a two-week experimental effort nothing, I start to think maybe it's time to summarize some typical coding skills as well as reminders for **Keras**
+After making a horrible mistake which makes a two-week experiment nothing, I start to think maybe it's time to summarize some typical coding skills as well as some reminders for **Keras**
 
 ### 1. Wrap in function instead of sub-classing
 
