@@ -35,8 +35,8 @@ For example, we're going to generate a sentence with a vocabulary $\mathcal{V}=\
 <div>
 $$\begin{split} \{BOS\} & \stackrel{step 1}{\longrightarrow}\{BOS+I={\color{red}0.6},BOS+like=0.1,BOS+spring={\color{red}0.3},BOS+EOS=0.0\} \\
 & \stackrel{step 2}{\longrightarrow}\{I+like={\color{red}0.6\times 0.9},I+I=0.6\times 0.05,I+spring=0.6\times 0.05,I\,+EOS=0.6\times 0.0; \\
-& \,\,\,\,\,\,\,\,\,\,\,\,\,\,\,spring+like={\color{red}0.3\times 0.8},spring+I=0.8\times 0.05,spring+spring=0.8\times 0.1, \\
-& \,\,\,\,\,\,\,\,\,\,\,\,\,\,\,spring\,+EOS=0.8\times 0.05;\} \\
+& \,\,\,\,\,\,\,\,\,\,\,\,\,\,spring+like={\color{red}0.3\times 0.8},spring+I=0.8\times 0.05,spring+spring=0.8\times 0.1, \\
+& \,\,\,\,\,\,\,\,\,\,\,\,\,\,spring\,+EOS=0.8\times 0.05;\} \\
 & \stackrel{step 3}{\longrightarrow}\,\,\,\,...
 \end{split}$$
 </div>
@@ -57,7 +57,7 @@ the generation process can be written as:
 $$p(\textbf{y})=\prod \limits_{t=1}^{\|\textbf{y}\|}p(y_t|\textbf{y}_{<t})$$
 </div>
     
-'**where $\textbf{y}$ is a member of a set of well-formed outputs $\mathcal{Y}$** '. And  $\textbf{y}={y\_1,\,y\_2,\,... }$ where $y_k \in \mathcal{Y}$,  $\textbf{y}\_{\textless t\}=\{y\_1,\,y\_2,\,...,y\_\{t-1\},\,y\_t }$. And in the following discussion, a max generation length $T$ for the sentence is considered.2
+'**where $\textbf{y}$ is a member of a set of well-formed outputs $\mathcal{Y}$** '. And  $\textbf{y}=\left\{y\_1,\,y\_2,\,... \right\}$ where $y\_k \in \mathcal{Y}$,  $\textbf{y}\_\left\{\< t\}=\{y\_1,\,y\_2,\,...,y\_\{t-1\},\,y\_t\right\}$. And in the following discussion, a max generation length $T$ for the sentence is considered.2
 
 To solve the problem of  $\textbf{y}^{*}=\underset{y\in \mathcal{Y}}{argmax}\,\,log\,p(\textbf{y})$, the beam search is then formulated as:
     
@@ -71,7 +71,7 @@ Where:
     
 $$Q_t(Y_t\,\|\,Y_{t-1})\overset{def}{\propto}
 \begin{cases}
-\prod \limits_{n=1}^{N}w_n& \text{if\,\,\,\|Y\|=K}\\
+\prod \limits_{n=1}^{N}w_n & \text{if\,\,\,|Y|=K}\\
 0& \textbf{otherwise} 
 \end{cases}\qquad \qquad \qquad \qquad \qquad (3)$$
 
@@ -80,7 +80,7 @@ Note that $Q_t(Y_t\,\|\,Y_{t-1})$ is only assigned value when $\|Y_t\|=K$, and t
 
 And now let's continue to sort out some undefined concepts:
 
-if we define steps as $t=1,\,2,\,...T$, and  $Y\_{t-1}\,\circ\,V\overset{def}{=}\{\textbf{y}\,\circ\,y\,\|\,\textbf{y}\in Y\_{t-1}\,\,\textbf{and}\,\,y\in V\}$ , where $\circ$ means concatenation (which is the '$+$' in the [above-mentioned case](#1) ), and also: $B\_t\overset{def}{=}Y\_{t-1}\,\circ\,V$, thus $B\_t$ is actually: $\{\textbf{y}\_{\leq t}^{(1)},\,...\textbf{y}\_{\leq t}^{(N)}\}$  where $N=K\times \|\mathcal{V}\|$ (except when $t=0$ since there is only a choice of $\|\mathcal{V}\|$ words for $BOS$), again **for simplicity, $\{\textbf{y}\_{\leq t}^{(1)},\,...\textbf{y}\_{\leq t}^{(N)}\}$ is represented as $\{1,\,2,\,...N\}$ .** And $w\_n\,(=p(\textbf{y}\_{\leq t}^{(n)}))$ indicates the probability of generation under the model (e.g., $spring+like={\color{red}0.3\times 0.8}$)2
+if we define steps as $t=1,\,2,\,...T$, and  $Y\_{t-1}\,\circ\,V\overset{def}{=}\left\{\textbf{y}\,\circ\,y\,\|\,\textbf{y}\in Y\_{t-1}\,\,\textbf{and}\,\,y\in V\right\}$ , where $\circ$ means concatenation (which is the '$+$' in the [above-mentioned case](#1) ), and also: $B\_t\overset{def}{=}Y\_{t-1}\,\circ\,V$, thus $B\_t$ is actually: $\left\{\textbf{y}\_{\leq t}^{(1)},\,...\textbf{y}\_{\leq t}^{(N)}\right\}$  where $N=K\times \|\mathcal{V}\|$ (except when $t=0$ since there is only a choice of $\|\mathcal{V}\|$ words for $BOS$), again **for simplicity, $\{\textbf{y}\_{\leq t}^{(1)},\,...\textbf{y}\_{\leq t}^{(N)}\}$ is represented as $\{1,\,2,\,...N\}$ .** And $w\_n\,(=p(\textbf{y}\_{\leq t}^{(n)}))$ indicates the probability of generation under the model (e.g., $spring+like={\color{red}0.3\times 0.8}$)
 
 ### Conditional Poisson Stochastic Beams
 
@@ -90,7 +90,7 @@ With the above mentioned definitions, a normalization to '**the time-step depend
     
 <div>
 $$\begin{eqnarray*}
-Y_0 &=& {<BOS>} \tag{4} \\
+Y_0 &=& {BOS} \tag{4} \\
 Y_t &\sim& Q_t({Y_t^{'}}\,|\,Y_{t-1}) \tag{5} \\
 re&turn\,Y_T 
 \end{eqnarray*}$$
