@@ -57,7 +57,7 @@ the generation process can be written as:
 $$p(\textbf{y})=\prod \limits_{t=1}^{\|\textbf{y}\|}p(y_t|\textbf{y}_{<t})$$
 </div>
     
-'**where $\textbf{y}$ is a member of a set of well-formed outputs $\mathcal{Y}$** '. And  $\textbf{y}=\{y\_1,\,y\_2,\,... \}$ where $y\_k \in \mathcal{Y}$,  $\textbf{y}\_\{\< t\}=\{y\_1,\,y\_2,\,...,y\_\{t-1\},\,y\_t\}$. And in the following discussion, a max generation length $T$ for the sentence is considered.2
+'**where $\textbf{y}$ is a member of a set of well-formed outputs $\mathcal{Y}$** '. And  $\textbf{y}=\\{y\_1,\,y\_2,\,... \\}$ where $y\_k \in \mathcal{Y}$,  $\textbf{y}\_\\{\< t\}=\{y\_1,\,y\_2,\,...,y\_\{t-1\},\,y\_t\\}$. And in the following discussion, a max generation length $T$ for the sentence is considered.2
 
 To solve the problem of  $\textbf{y}^{*}=\underset{y\in \mathcal{Y}}{argmax}\,\,log\,p(\textbf{y})$, the beam search is then formulated as:
     
@@ -108,13 +108,13 @@ $$P(Y_T)\,=\sum_{Y_1}...\sum_{Y_{T-1}}\prod \limits_{t=1}^{T}Q_t\,(\,Y_t\,|\,Y_{
     
 <a name='5'></a>
 
-And the summation is actually computing the marginal distribution out of a joint distribution. The above marginal distribution tells us that: for the final beam set $Y_T$ of size $K$, there're roughly (**less than**): $\|\#Y_1\|\times \|\#Y_2\|\times ··· \times \|\#Y_{T-1}\| \times \|\#Y_T\|$ available values to be assigned with, where $\|\#Y_t\|$ denotes the number of possible values for set $Y\_t$ at time-step $t$ . And the authors state that: '**Note the structural zeros of $Q\_t$ prevent any incompatible sequence of beams**' , which can be answered by the following example:
+And the summation is actually computing the marginal distribution out of a joint distribution. The above marginal distribution tells us that: for the final beam set $Y_T$ of size $K$, there're roughly (**less than**): $|\#Y_1|\times |\#Y_2|\times ··· \times |\#Y_{T-1}| \times |\#Y_T|$ available values to be assigned with, where $|\#Y_t|$ denotes the number of possible values for set $Y\_t$ at time-step $t$ . And the authors state that: '**Note the structural zeros of $Q\_t$ prevent any incompatible sequence of beams**' , which can be answered by the following example:
 
 For a $K=2$ CPSBS with a vocabulary $\mathcal{V}=\{1,\,2,\,...\,,7\}$ . If at $t=1$ , $Y_1$ can be: $\{BOS+1,\,BOS+3\}$ , then at $t=2$,  $Y\_2$ can be: $\{BOS+12,\,BOS+15,\,BOS+32,\,BOS+34\}$ .
 
 **However**, note that $Q\_2(Y\_2=BOS+12\,\|\,Y\_1=BOS+3)$ and $Q\_2(Y\_2=BOS+15\,\|\,Y\_1=BOS+3)$ are both incompatible, vice versa. And this **explains** **why** $Q\_t=0$ can prevent '**incompatible sequence of beams**' and **why** the assignable values are **less than** the multiplication of available values at each time step.
 
-And also, for a given $Y\_T^{(m)}=\{\textbf{y}\_{\leq T}^{(m\_1)}\,,\,\textbf{y}\_{\leq T}^{(m\_2)}\,,\,...,\,\textbf{y}\_{\leq T}^{(m\_K)}\}$,  it's generation probability can be simply computed as (**no need to compute the summation**, since the stochastic sample at each time-step should be deterministic in order to generate $Y\_T^{(m)}$, to be specific, it means only $BOS+1$ can generate $BOS+12$ and $BOS+15$) : $P(Y\_T=Y\_T^{(m)})\,=\prod \limits\_{t=1}^{T}Q\_t\,(\,Y\_t=\{\textbf{y}_{\leq t}^{(m\_1)}\,,\,\textbf{y}_{\leq t}^{(m_2)}\,,\,...,\,\textbf{y}_{\leq t}^{(m_K)}\}\,\|\,Y_{t-1}=\{\textbf{y}_{\leq t-1}^{(m_1)}\,,\,\textbf{y}_{\leq t-1}^{(m_2)}\,,\,...,\,\textbf{y}_{\leq t-1}^{(m_K)}\})$ 
+And also, for a given $Y\_T^{(m)}=\{\textbf{y}\_{\leq T}^{(m\_1)}\,,\,\textbf{y}\_{\leq T}^{(m\_2)}\,,\,...,\,\textbf{y}\_{\leq T}^{(m\_K)}\}$,  it's generation probability can be simply computed as (**no need to compute the summation**, since the stochastic sample at each time-step should be deterministic in order to generate $Y\_T^{(m)}$, to be specific, it means only $BOS+1$ can generate $BOS+12$ and $BOS+15$) : $P(Y_T=Y_T^{(m)})\,=\prod \limits_{t=1}^{T}Q_t\,(\,Y_t=\\{\textbf{y}_{\leq t}^{(m_1)}\,,\,\textbf{y}_{\leq t}^{(m_2)}\,,\,...,\,\textbf{y}_{\leq t}^{(m_K)}\\}\,|\,Y_{t-1}=\\{\textbf{y}_{\leq t-1}^{(m_1)}\,,\,\textbf{y}_{\leq t-1}^{(m_2)}\,,\,...,\,\textbf{y}_{\leq t-1}^{(m_K)}\\})$ 
 
 Thus, for a given final beam set $Y\_T^{(m)}$ , we can actually compute its generation probability.
 
@@ -135,7 +135,7 @@ $$Z_t\overset{def}{=}\sum_{Y_t\subseteq B_t,\,|Y_t|=K} \prod \limits_{n=1}^{N}w_
 Where the notation $\prod \limits_{n=1}^{N}w_n$ still follows the meaning of [this](#2) . And following Kulesza and Taskar (2012, see [here](https://www.nowpublishers.com/article/Details/MAL-044)), an iterative algorithm can be proposed: ( For detailed pseudocode please refer to the App. C of the paper)
     
 <div>
-$$W\binom{n}{k}=\begin{cases} 1& \text{\textbf{if}\,\,\,k=0\,\,\,\textbf{or}\,\,\,n=k}\\ W\binom{n-1}{k}+w_nW\binom{n-1}{k-1}& \text{\textbf{if}\,\,\,k}\in (0,\,n)\\ 0& \text{\textbf{otherwise}} \end{cases}\qquad \qquad \qquad \qquad \qquad (8)$$
+$$W\binom{n}{k}=\begin{cases} 1& \text{\textbf{if}k=0 \textbf{or}n=k}\\ W\binom{n-1}{k}+w_nW\binom{n-1}{k-1}& \text{\textbf{if}k}\in (0,n)\\ 0& \text{\textbf{otherwise}} \end{cases}\qquad \qquad \qquad \qquad \qquad (8)$$
 </div>
     
 <a name='3'></a>
@@ -150,7 +150,7 @@ After the distribution $Q_t(·\,\|\,Y_{t-1})$ is normalized, the following algor
 >
 > 2: **for**$\,\,n=N,\,...\,,1$ :
 >
-> 3: $\qquad k\longleftarrow K-|Y_t|$  (*Number of remaining elements*)
+> 3: $\qquad k\longleftarrow K-\|Y_t\|$  (*Number of remaining elements*)
 >
 > 4:          Add the $n^{th}$ element of $B_t$ to $Y_t$ with probability:
 >
@@ -178,16 +178,20 @@ Let's consider an extreme situation: for the first $N-K$ elements, namely $\{N,\
 
 For a certain beam $\textbf{y}\_{\leq t}^{(n)}$ at time-step $t$, what's its probability of being included in the $Y\_t$ of this time-step? (i.e., $Pr(\textbf{y}\_{\leq t}^{(n)}\in Y\_t)$, which is called the **inclusion probability**) To understand this, we denote the inclusion probability of  $\textbf{y}\_{\leq t}^{(n)}$ ( *w.r.t.* $Q_t(·\,\|\,Y_{t-1})$ ) as :
 
- $\pi_{Q_t}(\textbf{y}_{\leq t}^{(n)}\,\|\,Y_{t-1})\overset{def}{=}\sum_{Y_t}Q_t(Y_t\,\|\,Y_{t-1})\,\mathbb{1}(\textbf{y}_{\leq t}^{(n)}\in Y_t)\qquad \qquad \qquad \qquad \qquad (9)$
-
-Where $Y_t$ ranges over all the possible size-$K$ set sampled from the base set $B_t$ , and $\mathbb{1}(\textbf{y}_{\leq t}^{(n)}\in Y_t)$ is an indicator, equals **one** if the desired beam $\textbf{y}_{\leq t}^{(n)}$ is in $Y_t$ , **zero otherwise**. And if at time-step $t$ we choose $w_n$ to make $\pi_{Q_t}(\textbf{y}_{\leq t}^{(n)}\,|\,Y_{t-1})\approx p(\textbf{y}_{\leq t}^{(n)})$ . It can recover beam search as we anneal the chosen weights: $w_n\rightarrow w_n^{1/\tau}$ as $\tau \rightarrow 0$, and the conditional Poisson distribution will assign probability 1 to the set containing the top-$K$ beams at time-step $t$ . And finding such $w_n$ s resulting a desired inclusion probability is possible, though requires solving a numerical optimization problem (Aires, 1999 {see [[paper]](https://link.springer.com/article/10.1023/A:1010091628740)}; Grafström, 2009 {see [[paper]](https://www.sciencedirect.com/science/article/pii/S037837580800387X?via%3Dihub)}) , thus the authors use an approximation of $w_n=p(\textbf{y}_{\leq t}^{(n)})/(1-p(\textbf{y}_{\leq t}^{(n)}))$ which yields good approximation in both theory and practice as reported in (Hájek, 1981 {see [[paper]]}; Bondesson et al. {see [[paper]](https://onlinelibrary.wiley.com/doi/10.1111/j.1467-9469.2006.00497.x)}, 2006; Aires, 1999 {see [[paper]](https://link.springer.com/article/10.1023/A:1010091628740)}) .
+<div>    
+$$\pi_{Q_t}(\textbf{y}_{\leq t}^{(n)}\,\|\,Y_{t-1})\overset{def}{=}\sum_{Y_t}Q_t(Y_t\,\|\,Y_{t-1})\,\mathbb{1}(\textbf{y}_{\leq t}^{(n)}\in Y_t)\qquad \qquad \qquad \qquad \qquad (9)$$
+</div>
+    
+Where $Y_t$ ranges over all the possible size-$K$ set sampled from the base set $B_t$ , and $\mathbb{1}(\textbf{y}_{\leq t}^{(n)}\in Y_t)$ is an indicator, equals **one** if the desired beam $\textbf{y}_{\leq t}^{(n)}$ is in $Y_t$ , **zero otherwise**. And if at time-step $t$ we choose $w_n$ to make $\pi_{Q_t}(\textbf{y}_{\leq t}^{(n)}\,\|\,Y_{t-1})\approx p(\textbf{y}_{\leq t}^{(n)})$ . It can recover beam search as we anneal the chosen weights: $w_n\rightarrow w_n^{1/\tau}$ as $\tau \rightarrow 0$, and the conditional Poisson distribution will assign probability 1 to the set containing the top-$K$ beams at time-step $t$ . And finding such $w_n$ s resulting a desired inclusion probability is possible, though requires solving a numerical optimization problem (Aires, 1999 {see [[paper]](https://link.springer.com/article/10.1023/A:1010091628740)}; Grafström, 2009 {see [[paper]](https://www.sciencedirect.com/science/article/pii/S037837580800387X?via%3Dihub)}) , thus the authors use an approximation of $w_n=p(\textbf{y}_{\leq t}^{(n)})/(1-p(\textbf{y}_{\leq t}^{(n)}))$ which yields good approximation in both theory and practice as reported in (Hájek, 1981 {see [[paper]]}; Bondesson et al. {see [[paper]](https://onlinelibrary.wiley.com/doi/10.1111/j.1467-9469.2006.00497.x)}, 2006; Aires, 1999 {see [[paper]](https://link.springer.com/article/10.1023/A:1010091628740)}) .
 
 - ***How do we estimate statistical features of CPSBS ?***
 
-With above-mentioned sampling process of CPSBS at each time-step known, now we of course can't help thinking about some questions like: 'How to calculate one specific beam, say: $\textbf{y}^{(m)}$'s entropy ?' or 'How do we compute the BLEU score (see [BLEU](https://aclanthology.org/P02-1040.pdf)) of $\textbf{y}^{(m)}$ ?' . And unlike beam search where $\textbf{y}^{(m)}$ appears deterministically, in CPSBS, $\textbf{y}^{(m)}$ can be in many different $Y_T$ s, which leads us to the statistical estimation of the CPSBS. In a more mathematical way, as the authors state: '**Let be $f:\,\mathcal{Y}\rightarrow \mathbb{R}^{d}$ , we seek to approximate its expected value under $p$: **'
-
-$\mathbb{E}_{\textbf{y}\sim p}[f(\textbf{y})]=\sum_{\textbf{y}\in \mathcal{Y}}p(\textbf{y})f(\textbf{y})\qquad \qquad \qquad \qquad \qquad (10)$
-
+With above-mentioned sampling process of CPSBS at each time-step known, now we of course can't help thinking about some questions like: 'How to calculate one specific beam, say: $\textbf{y}^{(m)}$'s entropy ?' or 'How do we compute the BLEU score (see [BLEU](https://aclanthology.org/P02-1040.pdf)) of $\textbf{y}^{(m)}$ ?' . And unlike beam search where $\textbf{y}^{(m)}$ appears deterministically, in CPSBS, $\textbf{y}^{(m)}$ can be in many different $Y_T$ s, which leads us to the statistical estimation of the CPSBS. In a more mathematical way, as the authors state: '**Let be $f:\,\mathcal{Y}\rightarrow \mathbb{R}^{d}$ , we seek to approximate its expected value under $p$:**'
+    
+<div>
+$$\mathbb{E}_{\textbf{y}\sim p}[f(\textbf{y})]=\sum_{\textbf{y}\in \mathcal{Y}}p(\textbf{y})f(\textbf{y})\qquad \qquad \qquad \qquad \qquad (10)$$
+</div>
+    
 And a traditional way is the Monte Carlo estimator: $G_{MC}\overset{def}{=}\frac{1}{M}\sum_{m=1}^{M}f(\textbf{y}^{(m)})$ where $\textbf{y}^{(m)}\overset{i.i.d}{\sim}p$ , and the authors argue that: '**However, in the special case of sampling from a finite population—which is extremely common in NLP—it can be very wasteful. For example, if a distribution is very peaked, it will sample the same item repeatedly; this could lead to inaccurate approximations for some $f$. As a consequence, the mean square error (MSE) of the estimator with respect to $\mathbb{E}_{\textbf{y}\sim p}[f(\textbf{y})]$ can be quite high for small M.**'  And since the sampling process of CPSBS is not independent (which means $\textbf{y}\nsim p$) , a **Horvitz–Thompson estimator** (see [[paper]](https://www.jstor.org/stable/2280784) here) is used to estimate the expectation of a certain $f$ over $Y_T\sim P$ , where $P$ is [this](#5) :
 
 $G_{HT}\overset{def}{=}\sum_{\textbf{y}\in Y_T}\frac{p(\textbf{y})}{\pi_P(\textbf{y})}f(\textbf{y})\qquad \qquad \qquad \qquad \qquad (11)$<a name='10'></a>
@@ -195,14 +199,20 @@ $G_{HT}\overset{def}{=}\sum_{\textbf{y}\in Y_T}\frac{p(\textbf{y})}{\pi_P(\textb
 - ***Estimate the inclusion probability  $\pi_P(y)$***
 
 As equation (11) mentions, to use the Horvitz–Thompson estimator we need to know the probability of generation: $p(y)$ (which is rather easy since it simply equals that of $Y_T$) and the inclusion probability:  $\pi_P(y)$ . However, though computing $\pi_P(y)$ can give us an '**unbiased**' HT estimator (for detailed information please refer to App. B. of the paper), **to actually compute such a value is almost impossible** (see the summations in the following [equation](#6)). And of course, we have two ways: **Naive Monte Carlo** and **Importance sampling** to estimate the following inclusion probability:
-
-$\pi_P(y)=\sum_{Y_T}P(Y_T)\,\mathbb{1}(\textbf{y}\in Y_T)=\sum_{Y_1}···\sum_{Y_T}\prod \limits_{t=1}^{T}Q_t\,(\,Y_t\,|\,Y_{t-1})\,\mathbb{1}(\textbf{y}_{\leq t}\in Y_t)\qquad \qquad \qquad \qquad \qquad (12)$<a name='6'></a>
+    
+<div>
+$$\pi_P(y)=\sum_{Y_T}P(Y_T)\,\mathbb{1}(\textbf{y}\in Y_T)=\sum_{Y_1}···\sum_{Y_T}\prod \limits_{t=1}^{T}Q_t\,(\,Y_t\,|\,Y_{t-1})\,\mathbb{1}(\textbf{y}_{\leq t}\in Y_t)\qquad \qquad \qquad \qquad \qquad (12)$$
+</div>
+<a name='6'></a>
 
 The Naive Monte Carlo estimator:
 
 We can defined the Naive Monte Carlo estimator as follows:
-
-$\hat{\pi}_P^{MC}(\textbf{y})\overset{def}{=}\frac{1}{M}\sum_{m=1}^{M}\mathbb{1}(\textbf{y}\in Y_T^{(m)})\qquad \qquad \qquad \qquad \qquad (13)$<a name='7'></a>
+    
+<div>
+$$\hat{\pi}_P^{MC}(\textbf{y})\overset{def}{=}\frac{1}{M}\sum_{m=1}^{M}\mathbb{1}(\textbf{y}\in Y_T^{(m)})\qquad \qquad \qquad \qquad \qquad (13)$$
+</div>
+<a name='7'></a>
 
 Where $Y^{(m)}\sim P$ . And '**$\hat{\pi}_p^{MC}$ is an unbiased estimator of $\pi_P$ with variance : $\mathbb{V}[\hat{\pi}_P^{MC}]=\frac{1}{M}(\pi_P(\textbf{y})-\pi_P(\textbf{y})^{2})$ . Meanwhile $1/\hat{\pi}_P^{MC}$ is a *consistent estimator* of $1/\pi_P$ with *asymptotic variance* : $\mathbb{V}_a[\frac{1}{\hat{\pi}_P^{MC}}]=\frac{1}{M}(\frac{1}{\pi_P(\textbf{y})^{3}}-\frac{1}{\pi_P(\textbf{y})^{2}})$**' . (for proof please refer to the App. B.2. of the paper)
 
@@ -211,12 +221,18 @@ And we can easily see the problems of the Naive Monte Carlo estimator. For a des
 Importance sampling:
 
 To solve the problem of sampling lots of  $Y_T^{(m)}$ s to contain the desired beam $\textbf{y}$ . We can actually make the sampled set include the desired beam $\textbf{y}$ , which the authors call: **hindsight samples** : $\tilde{Y}_1,\,\tilde{Y}_2,\,...,\tilde{Y}_T$ where they all contain the desired beam $\textbf{y}$ . And the hindsight samples can be generated through a **proposal distribution** conditioned on $\textbf{y}$ :
-
-$\tilde{Q}_t(\tilde{Y}_t\,|\,\tilde{Y}_{t-1}\,,\textbf{y})\overset{def}{=}\frac{Q_t(\tilde{Y}_t\,|\,\tilde{Y}_{t-1})}{\pi_{Q_t}(\textbf{y}_{\leq t}\,|\,\tilde{Y}_{t-1})}\qquad \qquad \qquad \qquad \qquad (14)$<a name='9'></a>
+    
+<div>
+$$\tilde{Q}_t(\tilde{Y}_t\,|\,\tilde{Y}_{t-1}\,,\textbf{y})\overset{def}{=}\frac{Q_t(\tilde{Y}_t\,|\,\tilde{Y}_{t-1})}{\pi_{Q_t}(\textbf{y}_{\leq t}\,|\,\tilde{Y}_{t-1})}\qquad \qquad \qquad \qquad \qquad (14)$$
+</div>
+<a name='9'></a>
 
 And according to the authors, the proposal distribution can be done by a simply modification to the CPSBS algorithm: '**where $w(\textbf{y})$ corresponding to $\textbf{y}_{\leq t}^{(n)}$ is plcaed at the beginning and added to $Y_t$ deterministically**'. For simplicity, the fact $\tilde{Y}$ and $\tilde{Q}$ are conditioned on $\textbf{y}$ are omitted. And the following lemma is proposed by the authors (see the proof in the App. B.2. of the paper):
-
-$\tilde{P}(\tilde{Y}_1,\,...,\tilde{Y}_T)=\frac{P(\tilde{Y}_1,\,...,\tilde{Y}_T)}{\prod \limits_{t=1}^{T}\pi_{Q_t}(\textbf{y}_{\leq t}\,|\,\tilde{Y}_{t-1})}\qquad \qquad \qquad \qquad \qquad (15)$<a name='8'></a>
+    
+<div>
+$$\tilde{P}(\tilde{Y}_1,\,...,\tilde{Y}_T)=\frac{P(\tilde{Y}_1,\,...,\tilde{Y}_T)}{\prod \limits_{t=1}^{T}\pi_{Q_t}(\textbf{y}_{\leq t}\,|\,\tilde{Y}_{t-1})}\qquad \qquad \qquad \qquad \qquad (15)$$
+</div>
+<a name='8'></a>
 
 Where $\tilde{P}(\tilde{Y}_1,\,...,\tilde{Y}_T)\overset{def}{=}\prod \limits_{t=1}^{T}\tilde{Q}_t(\tilde{Y}_t\,|\,\tilde{Y}_{t-1})$ is the *joint proposal distribution* . And  $P(\tilde{Y}_1,\,...,\tilde{Y}_T)\overset{def}{=}\prod \limits_{t=1}^{T}Q_t(\tilde{Y}_t\,|\,\tilde{Y}_{t-1})$ is defined as the *joint probability of the beams under the original distribution $Q_t$* . And both $P$ and $\tilde{P}$ conditioning on $Y_0$ are omitted.
 
@@ -227,8 +243,11 @@ $$\begin{eqnarray*}\pi_{Q_t}(\textbf{y}_{\leq t}^{(n)}\,|\,Y_{t-1}) &\overset{de
 </div>
     
 Where $\textbf{y}_{\leq t}^{(n)}$ indicates the $n$-th candidate beam out of the $N$ beams. And for $\tilde{Y}_T^{(m)}\sim \tilde{P}$  where $\tilde{P}$ is defined by the proposal distribution in [(14)](#9) . The inclusion probability in the HT estimator mentioned in [(11)](#10) can be estimated as:
-
-$\hat{\pi}_P^{IS}(\textbf{y})\overset{def}{=}\frac{1}{M}\sum_{m=1}^{M}\prod \limits_{t=1}^{T}\pi_{Q_t}(\textbf{y}_{\leq t}\,|\,\tilde{Y}_{t-1}^{(m)})\qquad \qquad \qquad \qquad \qquad (17)$<a name='11'></a>
+    
+<div>
+$$\hat{\pi}_P^{IS}(\textbf{y})\overset{def}{=}\frac{1}{M}\sum_{m=1}^{M}\prod \limits_{t=1}^{T}\pi_{Q_t}(\textbf{y}_{\leq t}\,|\,\tilde{Y}_{t-1}^{(m)})\qquad \qquad \qquad \qquad \qquad (17)$$
+</div>
+<a name='11'></a>
 
 And the above estimation can be derived from:
     
@@ -243,7 +262,7 @@ $$\begin{eqnarray*}
     
 Which indicates that [(17)](#11) inherits unbiasedness from the Naive Monte Carlo estimator in [(13)](#7) . And the following properties can be observed from the Importance Sampling strategy in [(17)](#11) :
 
- ' ***$\hat{\pi}_p^{IS}$ is an unbiased estimator of $\pi_P$ . Meanwhile $1/\hat{\pi}_P^{IS}$ is a consistent estimator of $1/\pi_P$ with an upper bound on asymptotic variance : $\mathbb{V}_a[\frac{1}{\hat{\pi}_P^{MC}}]\leq\frac{1}{M}\frac{r-1}{\pi_P(\textbf{y})^{2}}$ where an assumption that “for all $\tilde{Y}_1,\,...\,,\tilde{Y}_T$ the following bound: $\frac{\prod \limits_{t=1}^{T}\pi_{Q_t}(\textbf{y}_{\leq t}\,|\,\tilde{Y}_{t-1})}{\pi_P(\textbf{y})}\leq r$ holds” is made*** ' (for proof please refer to the App. B.2. of the paper). And the authors also mention that when $\prod \limits_{t=1}^{T}\pi_{Q_t}(\textbf{y}_{\leq t}\,|\,\tilde{Y}_{t-1})$ approximates the real $\pi_P(\textbf{y})$ , the variance of the Importance Sampling estimate is relatively smaller that that of the Naive Monte Carlo, '**which is often the case for estimators when a proposal distribution is chosen judiciously (Rubinstein and Kroese, 2016).**' (see [[paper]](https://www.wiley.com/en-us/Simulation+and+the+Monte+Carlo+Method%2C+3rd+Edition-p-9781118632161))
+ ' ***$\hat{\pi}_p^{IS}$ is an unbiased estimator of $\pi_P$ . Meanwhile $1/\hat{\pi}_P^{IS}$ is a consistent estimator of $1/\pi_P$ with an upper bound on asymptotic variance : $\mathbb{V}_a[\frac{1}{\hat{\pi}_P^{MC}}]\leq\frac{1}{M}\frac{r-1}{\pi_P(\textbf{y})^{2}}$ where an assumption that “for all $\tilde{Y}_1,\,...\,,\tilde{Y}_T$ the following bound: $\frac{\prod \limits_{t=1}^{T}\pi_{Q_t}(\textbf{y}_{\leq t}\,\|\,\tilde{Y}_{t-1})}{\pi_P(\textbf{y})}\leq r$ holds” is made*** ' (for proof please refer to the App. B.2. of the paper). And the authors also mention that when $\prod \limits_{t=1}^{T}\pi_{Q_t}(\textbf{y}_{\leq t}\,\|\,\tilde{Y}_{t-1})$ approximates the real $\pi_P(\textbf{y})$ , the variance of the Importance Sampling estimate is relatively smaller that that of the Naive Monte Carlo, '**which is often the case for estimators when a proposal distribution is chosen judiciously (Rubinstein and Kroese, 2016).**' (see [[paper]](https://www.wiley.com/en-us/Simulation+and+the+Monte+Carlo+Method%2C+3rd+Edition-p-9781118632161))
 
 ### Experiments
 
