@@ -57,7 +57,7 @@ the generation process can be written as:
 $$p(\textbf{y})=\prod \limits_{t=1}^{\|\textbf{y}\|}p(y_t|\textbf{y}_{<t})$$
 </div>
     
-'**where $\textbf{y}$ is a member of a set of well-formed outputs $\mathcal{Y}$** '. And  $\textbf{y}=\{y\_1,\,y\_2,\,... \}$ where $y_k \in \mathcal{Y}$,  $\textbf{y}\_\{\textless t\}=\{y\_1,\,y\_2,\,...,y\_\{t-1\},\,y\_t \}$. And in the following discussion, a max generation length $T$ for the sentence is considered.1
+'**where $\textbf{y}$ is a member of a set of well-formed outputs $\mathcal{Y}$** '. And  $\textbf{y}={y\_1,\,y\_2,\,... }$ where $y_k \in \mathcal{Y}$,  $\textbf{y}\_{\textless t\}=\{y\_1,\,y\_2,\,...,y\_\{t-1\},\,y\_t }$. And in the following discussion, a max generation length $T$ for the sentence is considered.2
 
 To solve the problem of  $\textbf{y}^{*}=\underset{y\in \mathcal{Y}}{argmax}\,\,log\,p(\textbf{y})$, the beam search is then formulated as:
     
@@ -69,19 +69,18 @@ re&turn\,Y_T
     
 Where:
     
-<div>
 $$Q_t(Y_t\,\|\,Y_{t-1})\overset{def}{\propto}
 \begin{cases}
 \prod \limits_{n=1}^{N}w_n& \text{if\,\,\,\|Y\|=K}\\
 0& \textbf{otherwise} 
 \end{cases}\qquad \qquad \qquad \qquad \qquad (3)$$
-</div>
+
 
 Note that $Q_t(Y_t\,\|\,Y_{t-1})$ is only assigned value when $\|Y_t\|=K$, and the though the assigned value is written as $\prod \limits_{n=1}^{N}w_n$ , it actually means for those $w_n$'s belonging to the set $Y_t$ . For example, if $K=3,\,N=9$ and $\{w_1,\,w_4,\,w_5\}$ belongs to $Y_t$ ,  then $\prod \limits_{n=1}^{N}w_n$ indicates $w_1\times w_4\times w_5$ . <a name='2'></a>
 
 And now let's continue to sort out some undefined concepts:
 
-if we define steps as $t=1,\,2,\,...T$, and  $Y_{t-1}\,\circ\,V\overset{def}{=}\{\textbf{y}\,\circ\,y\,|\,\textbf{y}\in Y_{t-1}\,\,\textbf{and}\,\,y\in V\}$ , where $\circ$ means concatenation (which is the '$+$' in the [above-mentioned case](#1) ), and also: $B_t\overset{def}{=}Y_{t-1}\,\circ\,V$, thus $B_t$ is actually: $\{\textbf{y}_{\leq t}^{(1)},\,...\textbf{y}_{\leq t}^{(N)}\}$  where $N=K\times |\mathcal{V}|$ (except when $t=0$ since there is only a choice of $|\mathcal{V}|$ words for $<BOS>$), again **for simplicity, $\{\textbf{y}_{\leq t}^{(1)},\,...\textbf{y}_{\leq t}^{(N)}\}$ is represented as $\{1,\,2,\,...N\}$ .** And $w_n\,(=p(\textbf{y}_{\leq t}^{(n)}))$ indicates the probability of generation under the model (e.g., $spring+like={\color{red}0.3\times 0.8}$)
+if we define steps as $t=1,\,2,\,...T$, and  $Y\_{t-1}\,\circ\,V\overset{def}{=}\{\textbf{y}\,\circ\,y\,\|\,\textbf{y}\in Y\_{t-1}\,\,\textbf{and}\,\,y\in V\}$ , where $\circ$ means concatenation (which is the '$+$' in the [above-mentioned case](#1) ), and also: $B\_t\overset{def}{=}Y\_{t-1}\,\circ\,V$, thus $B\_t$ is actually: $\{\textbf{y}\_{\leq t}^{(1)},\,...\textbf{y}\_{\leq t}^{(N)}\}$  where $N=K\times \|\mathcal{V}\|$ (except when $t=0$ since there is only a choice of $\|\mathcal{V}\|$ words for $BOS$), again **for simplicity, $\{\textbf{y}\_{\leq t}^{(1)},\,...\textbf{y}\_{\leq t}^{(N)}\}$ is represented as $\{1,\,2,\,...N\}$ .** And $w\_n\,(=p(\textbf{y}\_{\leq t}^{(n)}))$ indicates the probability of generation under the model (e.g., $spring+like={\color{red}0.3\times 0.8}$)2
 
 ### Conditional Poisson Stochastic Beams
 
