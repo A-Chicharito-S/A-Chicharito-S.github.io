@@ -30,7 +30,7 @@ Note that: '**xxx**' means quoted from the paper; **xxx** is to underline; ***su
 
 **Beam search** is a very important decoding strategy for NLP tasks involving generation (e.g., NMT, text generation), they're usually done in the following way: 
 
-For example, we're going to generate a sentence with a vocabulary $\mathcal{V}=\{I, like, spring, EOS\}$, where $BOS$ only indicates the end of the sentence. At the beginning of generation, we start with a $BOS$ token which indicates the beginning of the sentence. And beam search aims to find the top-$K$ possible decoding options at each time step, thus, at step 1, we may have a probability of ${I=0.6, like=0.1, spring=0.3}$, indicating the likelihood of a word from $\mathcal{V}$ being placed at the step ( at step 1, which means after $BOS$), and let the $K=2$ , then the decoding process can be roughly illustrated as: <a name='1'></a>
+For example, we're going to generate a sentence with a vocabulary $\mathcal{V}=\\{I, like, spring, EOS\\}$, where $BOS$ only indicates the end of the sentence. At the beginning of generation, we start with a $BOS$ token which indicates the beginning of the sentence. And beam search aims to find the top-$K$ possible decoding options at each time step, thus, at step 1, we may have a probability of ${I=0.6, like=0.1, spring=0.3}$, indicating the likelihood of a word from $\mathcal{V}$ being placed at the step ( at step 1, which means after $BOS$), and let the $K=2$ , then the decoding process can be roughly illustrated as: <a name='1'></a>
 
 <div>
 $$\begin{split} \{BOS\} & \stackrel{step 1}{\longrightarrow}\{BOS+I={\color{red}0.6},BOS+like=0.1,BOS+spring={\color{red}0.3},BOS+EOS=0.0\} \\
@@ -57,7 +57,7 @@ the generation process can be written as:
 $$p(\textbf{y})=\prod \limits_{t=1}^{\|\textbf{y}\|}p(y_t|\textbf{y}_{<t})$$
 </div>
     
-'**where $\textbf{y}$ is a member of a set of well-formed outputs $\mathcal{Y}$** '. And  $\textbf{y}=\left\{y\_1,\,y\_2,\,... \right\}$ where $y\_k \in \mathcal{Y}$,  $\textbf{y}\_\left\{\< t\}=\{y\_1,\,y\_2,\,...,y\_\{t-1\},\,y\_t\right\}$. And in the following discussion, a max generation length $T$ for the sentence is considered.2
+'**where $\textbf{y}$ is a member of a set of well-formed outputs $\mathcal{Y}$** '. And  $\textbf{y}=\{y\_1,\,y\_2,\,... \}$ where $y\_k \in \mathcal{Y}$,  $\textbf{y}\_\{\< t\}=\{y\_1,\,y\_2,\,...,y\_\{t-1\},\,y\_t\}$. And in the following discussion, a max generation length $T$ for the sentence is considered.2
 
 To solve the problem of  $\textbf{y}^{*}=\underset{y\in \mathcal{Y}}{argmax}\,\,log\,p(\textbf{y})$, the beam search is then formulated as:
     
@@ -71,7 +71,7 @@ Where:
     
 $$Q_t(Y_t\,\|\,Y_{t-1})\overset{def}{\propto}
 \begin{cases}
-\prod \limits_{n=1}^{N}w_n & \text{if\,\,\,|Y|=K}\\
+\prod \limits_{n=1}^{N}w_n & \text{if   |Y|=K}\\
 0& \textbf{otherwise} 
 \end{cases}\qquad \qquad \qquad \qquad \qquad (3)$$
 
@@ -80,13 +80,13 @@ Note that $Q_t(Y_t\,\|\,Y_{t-1})$ is only assigned value when $\|Y_t\|=K$, and t
 
 And now let's continue to sort out some undefined concepts:
 
-if we define steps as $t=1,\,2,\,...T$, and  $Y\_{t-1}\,\circ\,V\overset{def}{=}\left\{\textbf{y}\,\circ\,y\,\|\,\textbf{y}\in Y\_{t-1}\,\,\textbf{and}\,\,y\in V\right\}$ , where $\circ$ means concatenation (which is the '$+$' in the [above-mentioned case](#1) ), and also: $B\_t\overset{def}{=}Y\_{t-1}\,\circ\,V$, thus $B\_t$ is actually: $\left\{\textbf{y}\_{\leq t}^{(1)},\,...\textbf{y}\_{\leq t}^{(N)}\right\}$  where $N=K\times \|\mathcal{V}\|$ (except when $t=0$ since there is only a choice of $\|\mathcal{V}\|$ words for $BOS$), again **for simplicity, $\{\textbf{y}\_{\leq t}^{(1)},\,...\textbf{y}\_{\leq t}^{(N)}\}$ is represented as $\{1,\,2,\,...N\}$ .** And $w\_n\,(=p(\textbf{y}\_{\leq t}^{(n)}))$ indicates the probability of generation under the model (e.g., $spring+like={\color{red}0.3\times 0.8}$)
+if we define steps as $t=1,\,2,\,...T$, and  $Y\_{t-1}\,\circ\,V\overset{def}{=}\{\textbf{y}\,\circ\,y\,\|\,\textbf{y}\in Y\_{t-1}\,\,\textbf{and}\,\,y\in V\}$ , where $\circ$ means concatenation (which is the '$+$' in the [above-mentioned case](#1) ), and also: $B\_t\overset{def}{=}Y\_{t-1}\,\circ\,V$, thus $B\_t$ is actually: $\{\textbf{y}\_{\leq t}^{(1)},\,...\textbf{y}\_{\leq t}^{(N)}\}$  where $N=K\times \|\mathcal{V}\|$ (except when $t=0$ since there is only a choice of $\|\mathcal{V}\|$ words for $BOS$), again **for simplicity, $\{\textbf{y}\_{\leq t}^{(1)},\,...\textbf{y}\_{\leq t}^{(N)}\}$ is represented as $\{1,\,2,\,...N\}$ .** And $w\_n\,(=p(\textbf{y}\_{\leq t}^{(n)}))$ indicates the probability of generation under the model (e.g., $spring+like={\color{red}0.3\times 0.8}$)
 
 ### Conditional Poisson Stochastic Beams
 
 - ***why called 'conditional Poisson stochastic beam search' ?***
 
-With the above mentioned definitions, a normalization to '**the time-step dependent set function**' $Q_t(Y_t\,|\,Y_{t-1})$ (which makes it a distribution) can derive the '**sample-without-replacement**' ('**without-replacement**' means one element after being chosen, can't be chosen again) version of beam search:
+With the above mentioned definitions, a normalization to '**the time-step dependent set function**' $Q_t(Y_t\,\|\,Y_{t-1})$ (which makes it a distribution) can derive the '**sample-without-replacement**' ('**without-replacement**' means one element after being chosen, can't be chosen again) version of beam search:
     
 <div>
 $$\begin{eqnarray*}
@@ -96,7 +96,7 @@ re&turn\,Y_T
 \end{eqnarray*}$$
 </div>
     
-And '**This recursion corresponds to performing conditional Poisson sampling (CPS; Hájek 1964;see App. A for overview), a common sampling-without-replacement design (Tillé, 2006)^3^, at every time step.**'  where in **3** the authors explain: '**A sampling design is a probability distribution over sets of samples.**' And that's why the proposed work is referred to as '**conditional Poisson stochastic beam search**' (CPSBS)
+And '**This recursion corresponds to performing conditional Poisson sampling (CPS; Hájek 1964;see App. A for overview), a common sampling-without-replacement design (Tillé, 2006)<sup>3</sup>, at every time step.**'  where in **3** the authors explain: '**A sampling design is a probability distribution over sets of samples.**' And that's why the proposed work is referred to as '**conditional Poisson stochastic beam search**' (CPSBS)
 
 - ***How is it performed in detail ?***
 
@@ -108,23 +108,23 @@ $$P(Y_T)\,=\sum_{Y_1}...\sum_{Y_{T-1}}\prod \limits_{t=1}^{T}Q_t\,(\,Y_t\,|\,Y_{
     
 <a name='5'></a>
 
-And the summation is actually computing the marginal distribution out of a joint distribution. The above marginal distribution tells us that: for the final beam set $Y_T$ of size $K$, there're roughly (**less than**): $|\#Y_1|\times |\#Y_2|\times ··· \times |\#Y_{T-1}| \times |\#Y_T|$ available values to be assigned with, where $|\#Y_t|$ denotes the number of possible values for set $Y_t$ at time-step $t$ . And the authors state that: '**Note the structural zeros of $Q_t$ prevent any incompatible sequence of beams**' , which can be answered by the following example:
+And the summation is actually computing the marginal distribution out of a joint distribution. The above marginal distribution tells us that: for the final beam set $Y_T$ of size $K$, there're roughly (**less than**): $\|\#Y_1\|\times \|\#Y_2\|\times ··· \times \|\#Y_{T-1}\| \times \|\#Y_T\|$ available values to be assigned with, where $\|\#Y_t\|$ denotes the number of possible values for set $Y\_t$ at time-step $t$ . And the authors state that: '**Note the structural zeros of $Q\_t$ prevent any incompatible sequence of beams**' , which can be answered by the following example:
 
-For a $K=2$ CPSBS with a vocabulary $\mathcal{V}=\{1,\,2,\,...\,,7\}$ . If at $t=1$ , $Y_1$ can be: $\{BOS+1,\,BOS+3\}$ , then at $t=2$,  $Y_2$ can be: $\{BOS+12,\,BOS+15,\,BOS+32,\,BOS+34\}$ .
+For a $K=2$ CPSBS with a vocabulary $\mathcal{V}=\{1,\,2,\,...\,,7\}$ . If at $t=1$ , $Y_1$ can be: $\{BOS+1,\,BOS+3\}$ , then at $t=2$,  $Y\_2$ can be: $\{BOS+12,\,BOS+15,\,BOS+32,\,BOS+34\}$ .
 
-**However**, note that $Q_2(Y_2=BOS+12\,|\,Y_1=BOS+3)$ and $Q_2(Y_2=BOS+15\,|\,Y_1=BOS+3)$ are both incompatible, vice versa. And this **explains** **why** $Q_t=0$ can prevent '**incompatible sequence of beams**' and **why** the assignable values are **less than** the multiplication of available values at each time step.
+**However**, note that $Q\_2(Y\_2=BOS+12\,\|\,Y\_1=BOS+3)$ and $Q\_2(Y\_2=BOS+15\,\|\,Y\_1=BOS+3)$ are both incompatible, vice versa. And this **explains** **why** $Q\_t=0$ can prevent '**incompatible sequence of beams**' and **why** the assignable values are **less than** the multiplication of available values at each time step.
 
-And also, for a given $Y_T^{(m)}=\{\textbf{y}_{\leq T}^{(m_1)}\,,\,\textbf{y}_{\leq T}^{(m_2)}\,,\,...,\,\textbf{y}_{\leq T}^{(m_K)}\}$,  it's generation probability can be simply computed as (**no need to compute the summation**, since the stochastic sample at each time-step should be deterministic in order to generate $Y_T^{(m)}$, to be specific, it means only $<BOS>1$ can generate $<BOS>12$ and $<BOS>15$) : $P(Y_T=Y_T^{(m)})\,=\prod \limits_{t=1}^{T}Q_t\,(\,Y_t=\{\textbf{y}_{\leq t}^{(m_1)}\,,\,\textbf{y}_{\leq t}^{(m_2)}\,,\,...,\,\textbf{y}_{\leq t}^{(m_K)}\}\,|\,Y_{t-1}=\{\textbf{y}_{\leq t-1}^{(m_1)}\,,\,\textbf{y}_{\leq t-1}^{(m_2)}\,,\,...,\,\textbf{y}_{\leq t-1}^{(m_K)}\})$ 
+And also, for a given $Y\_T^{(m)}=\{\textbf{y}\_{\leq T}^{(m\_1)}\,,\,\textbf{y}\_{\leq T}^{(m\_2)}\,,\,...,\,\textbf{y}\_{\leq T}^{(m\_K)}\}$,  it's generation probability can be simply computed as (**no need to compute the summation**, since the stochastic sample at each time-step should be deterministic in order to generate $Y\_T^{(m)}$, to be specific, it means only $BOS+1$ can generate $BOS+12$ and $BOS+15$) : $P(Y\_T=Y\_T^{(m)})\,=\prod \limits\_{t=1}^{T}Q\_t\,(\,Y\_t=\{\textbf{y}_{\leq t}^{(m\_1)}\,,\,\textbf{y}_{\leq t}^{(m_2)}\,,\,...,\,\textbf{y}_{\leq t}^{(m_K)}\}\,\|\,Y_{t-1}=\{\textbf{y}_{\leq t-1}^{(m_1)}\,,\,\textbf{y}_{\leq t-1}^{(m_2)}\,,\,...,\,\textbf{y}_{\leq t-1}^{(m_K)}\})$ 
 
-Thus, for a given final beam set $Y_T^{(m)}$ , we can actually compute its generation probability.
+Thus, for a given final beam set $Y\_T^{(m)}$ , we can actually compute its generation probability.
 
 - ***How is CPSBS performed ?***
 
-Now we formally look deeper into how CPSBS is performed at time-step $t$ . Before we start, bear in mind that we have a few things to do to perform CPSBS: **1**. the previous set function $Q_t(Y_t\,|\,Y_{t-1})$ is a scoring function (see [here](#2)), we need to convert it into a distribution to perform sampling; **2**. an efficient and general algorithm should be there for us to perform sampling at each time-step; With these two preliminaries acknowledged, we now see how CPSBS is performed by the authors:
+Now we formally look deeper into how CPSBS is performed at time-step $t$ . Before we start, bear in mind that we have a few things to do to perform CPSBS: **1**. the previous set function $Q\_t(Y\_t\,\|\,Y_{t-1})$ is a scoring function (see [here](#2)), we need to convert it into a distribution to perform sampling; **2**. an efficient and general algorithm should be there for us to perform sampling at each time-step; With these two preliminaries acknowledged, we now see how CPSBS is performed by the authors:
 
-Step 1: Normalize $Q_t(·\,|\,Y_{t-1})$ .
+Step 1: Normalize $Q\_t(·\,\|\,Y_{t-1})$ .
 
-We know that now $Q_t(·\,|\,Y_{t-1})$ should be able to sample a $Y_t^{any}$ containing $K$ beams based on the previous size-$K$ set $Y_{t-1}$ , and since we are actually selecting $K$ beams out of $N=K \times |\mathcal{V}|$ , there are actually $\binom{N}{K}$ options for us to sample such a size-$K$ set $Y_t^{any}$ , thus,  $p(Y_t^{any})$ should be modified by the summation of the probabilities of size-$K$ sets that are possible to be sampled, and the normalization constant is defined as:
+We know that now $Q\_t(·\,\|\,Y_{t-1})$ should be able to sample a $Y\_t^{any}$ containing $K$ beams based on the previous size-$K$ set $Y\_{t-1}$ , and since we are actually selecting $K$ beams out of $N=K \times \|\mathcal{V}\|$ , there are actually $\binom{N}{K}$ options for us to sample such a size-$K$ set $Y_t^{any}$ , thus,  $p(Y_t^{any})$ should be modified by the summation of the probabilities of size-$K$ sets that are possible to be sampled, and the normalization constant is defined as:
     
 <div>
 $$Z_t\overset{def}{=}\sum_{Y_t\subseteq B_t,\,|Y_t|=K} \prod \limits_{n=1}^{N}w_n\qquad \qquad \qquad \qquad \qquad (7)$$
@@ -135,19 +135,16 @@ $$Z_t\overset{def}{=}\sum_{Y_t\subseteq B_t,\,|Y_t|=K} \prod \limits_{n=1}^{N}w_
 Where the notation $\prod \limits_{n=1}^{N}w_n$ still follows the meaning of [this](#2) . And following Kulesza and Taskar (2012, see [here](https://www.nowpublishers.com/article/Details/MAL-044)), an iterative algorithm can be proposed: ( For detailed pseudocode please refer to the App. C of the paper)
     
 <div>
-$$W\binom{n}{k}=
-\begin{cases}
-1& \text{\textbf{if}\,\,\,k=0\,\,\,\textbf{or}\,\,\,n=k}\\
-W\binom{n-1}{k}+w_nW\binom{n-1}{k-1}& \text{\textbf{if}\,\,\,k}\in (0,\,n)\\ 0& \text{\textbf{otherwise}} \end{cases}\qquad \qquad \qquad \qquad \qquad (8)$$
+$$W\binom{n}{k}=\begin{cases} 1& \text{\textbf{if}\,\,\,k=0\,\,\,\textbf{or}\,\,\,n=k}\\ W\binom{n-1}{k}+w_nW\binom{n-1}{k-1}& \text{\textbf{if}\,\,\,k}\in (0,\,n)\\ 0& \text{\textbf{otherwise}} \end{cases}\qquad \qquad \qquad \qquad \qquad (8)$$
 </div>
     
 <a name='3'></a>
 
 And $Z_t=W\binom{N}{K}$.
 
-Step 2: Sample from $Q_t(·\,|\,Y_{t-1})$ (normalized) .
+Step 2: Sample from $Q_t(·\,\|\,Y_{t-1})$ (normalized) .
 
-After the distribution $Q_t(·\,|\,Y_{t-1})$ is normalized, the following algorithm is proposed by the authors:
+After the distribution $Q_t(·\,\|\,Y_{t-1})$ is normalized, the following algorithm is proposed by the authors:
 
 > 1: $Y_t \longleftarrow \empty$  (*Initialization*)
 >
@@ -179,9 +176,9 @@ Let's consider an extreme situation: for the first $N-K$ elements, namely $\{N,\
 
 - ***A supplementary: what is inclusion probability ?***
 
-For a certain beam $\textbf{y}_{\leq t}^{(n)}$ at time-step $t$, what's its probability of being included in the $Y_t$ of this time-step? (i.e., $Pr(\textbf{y}_{\leq t}^{(n)}\in Y_t)$, which is called the **inclusion probability**) To understand this, we denote the inclusion probability of  $\textbf{y}_{\leq t}^{(n)}$ ( *w.r.t.* $Q_t(·\,|\,Y_{t-1})$ ) as :
+For a certain beam $\textbf{y}\_{\leq t}^{(n)}$ at time-step $t$, what's its probability of being included in the $Y\_t$ of this time-step? (i.e., $Pr(\textbf{y}\_{\leq t}^{(n)}\in Y\_t)$, which is called the **inclusion probability**) To understand this, we denote the inclusion probability of  $\textbf{y}\_{\leq t}^{(n)}$ ( *w.r.t.* $Q_t(·\,\|\,Y_{t-1})$ ) as :
 
- $\pi_{Q_t}(\textbf{y}_{\leq t}^{(n)}\,|\,Y_{t-1})\overset{def}{=}\sum_{Y_t}Q_t(Y_t\,|\,Y_{t-1})\,\mathbb{1}(\textbf{y}_{\leq t}^{(n)}\in Y_t)\qquad \qquad \qquad \qquad \qquad (9)$
+ $\pi_{Q_t}(\textbf{y}_{\leq t}^{(n)}\,\|\,Y_{t-1})\overset{def}{=}\sum_{Y_t}Q_t(Y_t\,\|\,Y_{t-1})\,\mathbb{1}(\textbf{y}_{\leq t}^{(n)}\in Y_t)\qquad \qquad \qquad \qquad \qquad (9)$
 
 Where $Y_t$ ranges over all the possible size-$K$ set sampled from the base set $B_t$ , and $\mathbb{1}(\textbf{y}_{\leq t}^{(n)}\in Y_t)$ is an indicator, equals **one** if the desired beam $\textbf{y}_{\leq t}^{(n)}$ is in $Y_t$ , **zero otherwise**. And if at time-step $t$ we choose $w_n$ to make $\pi_{Q_t}(\textbf{y}_{\leq t}^{(n)}\,|\,Y_{t-1})\approx p(\textbf{y}_{\leq t}^{(n)})$ . It can recover beam search as we anneal the chosen weights: $w_n\rightarrow w_n^{1/\tau}$ as $\tau \rightarrow 0$, and the conditional Poisson distribution will assign probability 1 to the set containing the top-$K$ beams at time-step $t$ . And finding such $w_n$ s resulting a desired inclusion probability is possible, though requires solving a numerical optimization problem (Aires, 1999 {see [[paper]](https://link.springer.com/article/10.1023/A:1010091628740)}; Grafström, 2009 {see [[paper]](https://www.sciencedirect.com/science/article/pii/S037837580800387X?via%3Dihub)}) , thus the authors use an approximation of $w_n=p(\textbf{y}_{\leq t}^{(n)})/(1-p(\textbf{y}_{\leq t}^{(n)}))$ which yields good approximation in both theory and practice as reported in (Hájek, 1981 {see [[paper]]}; Bondesson et al. {see [[paper]](https://onlinelibrary.wiley.com/doi/10.1111/j.1467-9469.2006.00497.x)}, 2006; Aires, 1999 {see [[paper]](https://link.springer.com/article/10.1023/A:1010091628740)}) .
 
