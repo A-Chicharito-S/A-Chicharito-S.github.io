@@ -68,13 +68,14 @@ re&turn\,Y_T
 \end{eqnarray*}$$
     
 Where:
-    
+
+<div>
 $$Q_t(Y_t\,\|\,Y_{t-1})\overset{def}{\propto}
 \begin{cases}
 \prod \limits_{n=1}^{N}w_n & \text{if   |Y|=K}\\
 0& \textbf{otherwise} 
 \end{cases}\qquad \qquad \qquad \qquad \qquad (3)$$
-
+</div>
 
 Note that $Q_t(Y_t\,\|\,Y_{t-1})$ is only assigned value when $\|Y_t\|=K$, and the though the assigned value is written as $\prod \limits_{n=1}^{N}w_n$ , it actually means for those $w_n$'s belonging to the set $Y_t$ . For example, if $K=3,\,N=9$ and $\{w_1,\,w_4,\,w_5\}$ belongs to $Y_t$ ,  then $\prod \limits_{n=1}^{N}w_n$ indicates $w_1\times w_4\times w_5$ . <a name='2'></a>
 
@@ -108,13 +109,13 @@ $$P(Y_T)\,=\sum_{Y_1}...\sum_{Y_{T-1}}\prod \limits_{t=1}^{T}Q_t\,(\,Y_t\,|\,Y_{
     
 <a name='5'></a>
 
-And the summation is actually computing the marginal distribution out of a joint distribution. The above marginal distribution tells us that: for the final beam set $Y_T$ of size $K$, there're roughly (**less than**): $|\#Y_1|\times |\#Y_2|\times ··· \times |\#Y_{T-1}| \times |\#Y_T|$ available values to be assigned with, where $|\#Y_t|$ denotes the number of possible values for set $Y\_t$ at time-step $t$ . And the authors state that: '**Note the structural zeros of $Q\_t$ prevent any incompatible sequence of beams**' , which can be answered by the following example:
+And the summation is actually computing the marginal distribution out of a joint distribution. The above marginal distribution tells us that: for the final beam set $Y_T$ of size $K$, there're roughly (**less than**): $\|\#Y_1\|\times \|\#Y_2\|\times ··· \times \|\#Y_{T-1}\| \times \|\#Y_T\|$ available values to be assigned with, where $\|\#Y_t\|$ denotes the number of possible values for set $Y\_t$ at time-step $t$ . And the authors state that: '**Note the structural zeros of $Q\_t$ prevent any incompatible sequence of beams**' , which can be answered by the following example:
 
 For a $K=2$ CPSBS with a vocabulary $\mathcal{V}=\{1,\,2,\,...\,,7\}$ . If at $t=1$ , $Y_1$ can be: $\{BOS+1,\,BOS+3\}$ , then at $t=2$,  $Y\_2$ can be: $\{BOS+12,\,BOS+15,\,BOS+32,\,BOS+34\}$ .
 
 **However**, note that $Q\_2(Y\_2=BOS+12\,\|\,Y\_1=BOS+3)$ and $Q\_2(Y\_2=BOS+15\,\|\,Y\_1=BOS+3)$ are both incompatible, vice versa. And this **explains** **why** $Q\_t=0$ can prevent '**incompatible sequence of beams**' and **why** the assignable values are **less than** the multiplication of available values at each time step.
 
-And also, for a given $Y\_T^{(m)}=\{\textbf{y}\_{\leq T}^{(m\_1)}\,,\,\textbf{y}\_{\leq T}^{(m\_2)}\,,\,...,\,\textbf{y}\_{\leq T}^{(m\_K)}\}$,  it's generation probability can be simply computed as (**no need to compute the summation**, since the stochastic sample at each time-step should be deterministic in order to generate $Y\_T^{(m)}$, to be specific, it means only $BOS+1$ can generate $BOS+12$ and $BOS+15$) : $P(Y_T=Y_T^{(m)})\,=\prod \limits_{t=1}^{T}Q_t\,(\,Y_t=\\{\textbf{y}_{\leq t}^{(m_1)}\,,\,\textbf{y}_{\leq t}^{(m_2)}\,,\,...,\,\textbf{y}_{\leq t}^{(m_K)}\\}\,|\,Y_{t-1}=\\{\textbf{y}_{\leq t-1}^{(m_1)}\,,\,\textbf{y}_{\leq t-1}^{(m_2)}\,,\,...,\,\textbf{y}_{\leq t-1}^{(m_K)}\\})$ 
+And also, for a given $Y\_T^{(m)}=\\{\textbf{y}\_{\leq T}^{(m\_1)}\,,\,\textbf{y}\_{\leq T}^{(m\_2)}\,,\,...,\,\textbf{y}\_{\leq T}^{(m\_K)}\\}$,  it's generation probability can be simply computed as (**no need to compute the summation**, since the stochastic sample at each time-step should be deterministic in order to generate $Y\_T^{(m)}$, to be specific, it means only $BOS+1$ can generate $BOS+12$ and $BOS+15$) : $P(Y_T=Y_T^{(m)})\,=\prod \limits_{t=1}^{T}Q_t\,(\,Y_t=\\{\textbf{y}\_{\leq t}^{(m_1)}\,,\,\textbf{y}\_{\leq t}^{(m_2)}\,,\,...,\,\textbf{y}\_{\leq t}^{(m_K)}\\}\,\|\,Y_{t-1}=\\{\textbf{y}\_{\leq t-1}^{(m_1)}\,,\,\textbf{y}\_{\leq t-1}^{(m_2)}\,,\,...,\,\textbf{y}\_{\leq t-1}^{(m_K)}\\})$ 
 
 Thus, for a given final beam set $Y\_T^{(m)}$ , we can actually compute its generation probability.
 
@@ -135,7 +136,7 @@ $$Z_t\overset{def}{=}\sum_{Y_t\subseteq B_t,\,|Y_t|=K} \prod \limits_{n=1}^{N}w_
 Where the notation $\prod \limits_{n=1}^{N}w_n$ still follows the meaning of [this](#2) . And following Kulesza and Taskar (2012, see [here](https://www.nowpublishers.com/article/Details/MAL-044)), an iterative algorithm can be proposed: ( For detailed pseudocode please refer to the App. C of the paper)
     
 <div>
-$$W\binom{n}{k}=\begin{cases} 1& \text{\textbf{if}k=0 \textbf{or}n=k}\\ W\binom{n-1}{k}+w_nW\binom{n-1}{k-1}& \text{\textbf{if}k}\in (0,n)\\ 0& \text{\textbf{otherwise}} \end{cases}\qquad \qquad \qquad \qquad \qquad (8)$$
+$$W\binom{n}{k}=\begin{cases} 1& \text{ \textbf{if} k=0 \textbf{or} n=k }\\ W\binom{n-1}{k}+w_nW\binom{n-1}{k-1}& \text{ \textbf{if} k }\in (0,n)\\ 0& \text{ \textbf{otherwise} } \end{cases}\qquad \qquad \qquad \qquad \qquad (8)$$
 </div>
     
 <a name='3'></a>
@@ -146,17 +147,17 @@ Step 2: Sample from $Q_t(·\,\|\,Y_{t-1})$ (normalized) .
 
 After the distribution $Q_t(·\,\|\,Y_{t-1})$ is normalized, the following algorithm is proposed by the authors:
 
-> 1: $Y_t \longleftarrow \empty$  (*Initialization*)
+> 1: $Y_t \longleftarrow \emptyset$  (*Initialization*)
 >
 > 2: **for**$\,\,n=N,\,...\,,1$ :
 >
-> 3: $\qquad k\longleftarrow K-\|Y_t\|$  (*Number of remaining elements*)
+> &ensp&ensp&ensp $\qquad k\longleftarrow K-\|Y_t\|$  (*Number of remaining elements*)
 >
-> 4:          Add the $n^{th}$ element of $B_t$ to $Y_t$ with probability:
+> &ensp&ensp&ensp Add the $n^{th}$ element of $B_t$ to $Y_t$ with probability:
 >
-> ​                                       $\frac{w_n\,W\binom{n-1}{k-1}}{W\binom{n}{k}}$
+> &ensp&ensp&ensp&ensp&ensp $\frac{w_n\,W\binom{n-1}{k-1}}{W\binom{n}{k}}$
 >
-> 5: **return** $Y_t$  (Guaranteed to have size $K$)
+> 3: **return** $Y_t$  (Guaranteed to have size $K$)
 
 And I explain the **why** the probability is $\frac{w_n\,W\binom{n-1}{k-1}}{W\binom{n}{k}}$ and **why** it is guaranteed to have size $K$ as follows:
 
@@ -164,7 +165,9 @@ And I explain the **why** the probability is $\frac{w_n\,W\binom{n-1}{k-1}}{W\bi
 
 We can consider $\frac{w_n\,W\binom{n-1}{k-1}}{W\binom{n}{k}}$ as the probability of the $n^{th}$ element of $B_t$ being **included** in the final $Y_t$ . With [(8)](#3) , we can derive:
 
- $\frac{w_n\,W\binom{n-1}{k-1}}{W\binom{n}{k}}=\frac{W\binom{n}{k}-W\binom{n-1}{k}}{W\binom{n}{k}}=1-\frac{W\binom{n-1}{k}}{W\binom{n}{k}}$
+<div>
+$$\frac{w_n\,W\binom{n-1}{k-1}}{W\binom{n}{k}}=\frac{W\binom{n}{k}-W\binom{n-1}{k}}{W\binom{n}{k}}=1-\frac{W\binom{n-1}{k}}{W\binom{n}{k}}$$
+</div>
 
 Where we consider $\frac{W\binom{n-1}{k}}{W\binom{n}{k}}$ as the probability of the $n^{th}$ element of $B_t$ being **excluded** in the final $Y_t$ . And according [(7)](#4) and [(8)](#3), we can interpret $W\binom{n}{k}$ as the total probability of choosing the remaining $k$ of the total $K$-to-be-chosen elements **out of** the available element set : $\{n,\,n-1,\,...\,1\}$, and since the elements are chosen in a reverse order (from $N$ to $1$), thus $W\binom{n-1}{k}$ is then the total probability of choosing the remaining $k$ of the total $K$-to-be-chosen elements **out of** the available element set : $\{n-1,\,...\,1\}$ where element $n$ is excluded. Thus, the probability of the $n^{th}$ element of $B_t$ being **excluded** in the final $Y_t$ is: probability of choosing $k$ elements without element $n$ / probability of choosing $k$ elements considering element $n$ (though it may not be necessarily chosen), which is: $\frac{W\binom{n-1}{k}}{W\binom{n}{k}}$ .
 
@@ -182,7 +185,7 @@ For a certain beam $\textbf{y}\_{\leq t}^{(n)}$ at time-step $t$, what's its pro
 $$\pi_{Q_t}(\textbf{y}_{\leq t}^{(n)}\,\|\,Y_{t-1})\overset{def}{=}\sum_{Y_t}Q_t(Y_t\,\|\,Y_{t-1})\,\mathbb{1}(\textbf{y}_{\leq t}^{(n)}\in Y_t)\qquad \qquad \qquad \qquad \qquad (9)$$
 </div>
     
-Where $Y_t$ ranges over all the possible size-$K$ set sampled from the base set $B_t$ , and $\mathbb{1}(\textbf{y}_{\leq t}^{(n)}\in Y_t)$ is an indicator, equals **one** if the desired beam $\textbf{y}_{\leq t}^{(n)}$ is in $Y_t$ , **zero otherwise**. And if at time-step $t$ we choose $w_n$ to make $\pi_{Q_t}(\textbf{y}_{\leq t}^{(n)}\,\|\,Y_{t-1})\approx p(\textbf{y}_{\leq t}^{(n)})$ . It can recover beam search as we anneal the chosen weights: $w_n\rightarrow w_n^{1/\tau}$ as $\tau \rightarrow 0$, and the conditional Poisson distribution will assign probability 1 to the set containing the top-$K$ beams at time-step $t$ . And finding such $w_n$ s resulting a desired inclusion probability is possible, though requires solving a numerical optimization problem (Aires, 1999 {see [[paper]](https://link.springer.com/article/10.1023/A:1010091628740)}; Grafström, 2009 {see [[paper]](https://www.sciencedirect.com/science/article/pii/S037837580800387X?via%3Dihub)}) , thus the authors use an approximation of $w_n=p(\textbf{y}_{\leq t}^{(n)})/(1-p(\textbf{y}_{\leq t}^{(n)}))$ which yields good approximation in both theory and practice as reported in (Hájek, 1981 {see [[paper]]}; Bondesson et al. {see [[paper]](https://onlinelibrary.wiley.com/doi/10.1111/j.1467-9469.2006.00497.x)}, 2006; Aires, 1999 {see [[paper]](https://link.springer.com/article/10.1023/A:1010091628740)}) .
+Where $Y_t$ ranges over all the possible size-$K$ set sampled from the base set $B_t$ , and $\mathbb{1}(\textbf{y}\_{\leq t}^{(n)}\in Y_t)$ is an indicator, equals **one** if the desired beam $\textbf{y}\_{\leq t}^{(n)}$ is in $Y_t$ , **zero otherwise**. And if at time-step $t$ we choose $w_n$ to make $\pi_{Q_t}(\textbf{y}\_{\leq t}^{(n)}\,\|\,Y_{t-1})\approx p(\textbf{y}\_{\leq t}^{(n)})$ . It can recover beam search as we anneal the chosen weights: $w_n\rightarrow w_n^{1/\tau}$ as $\tau \rightarrow 0$, and the conditional Poisson distribution will assign probability 1 to the set containing the top-$K$ beams at time-step $t$ . And finding such $w_n$ s resulting a desired inclusion probability is possible, though requires solving a numerical optimization problem (Aires, 1999 {see [[paper]](https://link.springer.com/article/10.1023/A:1010091628740)}; Grafström, 2009 {see [[paper]](https://www.sciencedirect.com/science/article/pii/S037837580800387X?via%3Dihub)}) , thus the authors use an approximation of $w_n=p(\textbf{y}\_{\leq t}^{(n)})/(1-p(\textbf{y}\_{\leq t}^{(n)}))$ which yields good approximation in both theory and practice as reported in (Hájek, 1981 {see [[paper]]}; Bondesson et al. {see [[paper]](https://onlinelibrary.wiley.com/doi/10.1111/j.1467-9469.2006.00497.x)}, 2006; Aires, 1999 {see [[paper]](https://link.springer.com/article/10.1023/A:1010091628740)}) .
 
 - ***How do we estimate statistical features of CPSBS ?***
 
@@ -192,9 +195,13 @@ With above-mentioned sampling process of CPSBS at each time-step known, now we o
 $$\mathbb{E}_{\textbf{y}\sim p}[f(\textbf{y})]=\sum_{\textbf{y}\in \mathcal{Y}}p(\textbf{y})f(\textbf{y})\qquad \qquad \qquad \qquad \qquad (10)$$
 </div>
     
-And a traditional way is the Monte Carlo estimator: $G_{MC}\overset{def}{=}\frac{1}{M}\sum_{m=1}^{M}f(\textbf{y}^{(m)})$ where $\textbf{y}^{(m)}\overset{i.i.d}{\sim}p$ , and the authors argue that: '**However, in the special case of sampling from a finite population—which is extremely common in NLP—it can be very wasteful. For example, if a distribution is very peaked, it will sample the same item repeatedly; this could lead to inaccurate approximations for some $f$. As a consequence, the mean square error (MSE) of the estimator with respect to $\mathbb{E}_{\textbf{y}\sim p}[f(\textbf{y})]$ can be quite high for small M.**'  And since the sampling process of CPSBS is not independent (which means $\textbf{y}\nsim p$) , a **Horvitz–Thompson estimator** (see [[paper]](https://www.jstor.org/stable/2280784) here) is used to estimate the expectation of a certain $f$ over $Y_T\sim P$ , where $P$ is [this](#5) :
+And a traditional way is the Monte Carlo estimator: $G_{MC}\overset{def}{=}\frac{1}{M}\sum_{m=1}^{M}f(\textbf{y}^{(m)})$ where $\textbf{y}^{(m)}\overset{i.i.d}{\sim}p$ , and the authors argue that: '**However, in the special case of sampling from a finite population—which is extremely common in NLP—it can be very wasteful. For example, if a distribution is very peaked, it will sample the same item repeatedly; this could lead to inaccurate approximations for some $f$. As a consequence, the mean square error (MSE) of the estimator with respect to $\mathbb{E}\_{\textbf{y}\sim p}[f(\textbf{y})]$ can be quite high for small M.**'  And since the sampling process of CPSBS is not independent (which means $\textbf{y}\nsim p$) , a **Horvitz–Thompson estimator** (see [[paper]](https://www.jstor.org/stable/2280784) here) is used to estimate the expectation of a certain $f$ over $Y_T\sim P$ , where $P$ is [this](#5) :
 
-$G_{HT}\overset{def}{=}\sum_{\textbf{y}\in Y_T}\frac{p(\textbf{y})}{\pi_P(\textbf{y})}f(\textbf{y})\qquad \qquad \qquad \qquad \qquad (11)$<a name='10'></a>
+<div>
+$$G_{HT}\overset{def}{=}\sum_{\textbf{y}\in Y_T}\frac{p(\textbf{y})}{\pi_P(\textbf{y})}f(\textbf{y})\qquad \qquad \qquad \qquad \qquad (11)$$
+</div>
+
+<a name='10'></a>
 
 - ***Estimate the inclusion probability  $\pi_P(y)$***
 
@@ -234,7 +241,7 @@ $$\tilde{P}(\tilde{Y}_1,\,...,\tilde{Y}_T)=\frac{P(\tilde{Y}_1,\,...,\tilde{Y}_T
 </div>
 <a name='8'></a>
 
-Where $\tilde{P}(\tilde{Y}_1,\,...,\tilde{Y}_T)\overset{def}{=}\prod \limits_{t=1}^{T}\tilde{Q}_t(\tilde{Y}_t\,|\,\tilde{Y}_{t-1})$ is the *joint proposal distribution* . And  $P(\tilde{Y}_1,\,...,\tilde{Y}_T)\overset{def}{=}\prod \limits_{t=1}^{T}Q_t(\tilde{Y}_t\,|\,\tilde{Y}_{t-1})$ is defined as the *joint probability of the beams under the original distribution $Q_t$* . And both $P$ and $\tilde{P}$ conditioning on $Y_0$ are omitted.
+Where $\tilde{P}(\tilde{Y}\_1,\,...,\tilde{Y}\_T)\overset{def}{=}\prod \limits_{t=1}^{T}\tilde{Q}\_t(\tilde{Y}\_t\,\|\,\tilde{Y}\_{t-1})$ is the *joint proposal distribution* . And  $P(\tilde{Y}\_1,\,...,\tilde{Y}\_T)\overset{def}{=}\prod \limits_{t=1}^{T}Q_t(\tilde{Y}\_t\,\|\,\tilde{Y}\_{t-1})$ is defined as the *joint probability of the beams under the original distribution $Q_t$* . And both $P$ and $\tilde{P}$ conditioning on $Y_0$ are omitted.
 
 And the computation for [(15)](#8)  makes use of the fact that the inclusion probability $\pi_{Q_t}(\textbf{y}_{\leq t})$ for a given $Q_t$ at each time-step can be computed with dynamic programming: (see the pseudocode in App. C. of the paper)
     
@@ -262,11 +269,11 @@ $$\begin{eqnarray*}
     
 Which indicates that [(17)](#11) inherits unbiasedness from the Naive Monte Carlo estimator in [(13)](#7) . And the following properties can be observed from the Importance Sampling strategy in [(17)](#11) :
 
- ' ***$\hat{\pi}_p^{IS}$ is an unbiased estimator of $\pi_P$ . Meanwhile $1/\hat{\pi}_P^{IS}$ is a consistent estimator of $1/\pi_P$ with an upper bound on asymptotic variance : $\mathbb{V}_a[\frac{1}{\hat{\pi}_P^{MC}}]\leq\frac{1}{M}\frac{r-1}{\pi_P(\textbf{y})^{2}}$ where an assumption that “for all $\tilde{Y}_1,\,...\,,\tilde{Y}_T$ the following bound: $\frac{\prod \limits_{t=1}^{T}\pi_{Q_t}(\textbf{y}_{\leq t}\,\|\,\tilde{Y}_{t-1})}{\pi_P(\textbf{y})}\leq r$ holds” is made*** ' (for proof please refer to the App. B.2. of the paper). And the authors also mention that when $\prod \limits_{t=1}^{T}\pi_{Q_t}(\textbf{y}_{\leq t}\,\|\,\tilde{Y}_{t-1})$ approximates the real $\pi_P(\textbf{y})$ , the variance of the Importance Sampling estimate is relatively smaller that that of the Naive Monte Carlo, '**which is often the case for estimators when a proposal distribution is chosen judiciously (Rubinstein and Kroese, 2016).**' (see [[paper]](https://www.wiley.com/en-us/Simulation+and+the+Monte+Carlo+Method%2C+3rd+Edition-p-9781118632161))
+'***$\hat{\pi}_p^{IS}$ is an unbiased estimator of $\pi_P$ . Meanwhile $1/\hat{\pi}_P^{IS}$ is a consistent estimator of $1/\pi_P$ with an upper bound on asymptotic variance : $\mathbb{V}_a[\frac{1}{\hat{\pi}_P^{MC}}]\leq\frac{1}{M}\frac{r-1}{\pi_P(\textbf{y})^{2}}$ where an assumption that “for all $\tilde{Y}_1,\,...\,,\tilde{Y}_T$ the following bound: $\frac{\prod \limits_{t=1}^{T}\pi_{Q_t}(\textbf{y}_{\leq t}\,\|\,\tilde{Y}_{t-1})}{\pi_P(\textbf{y})}\leq r$ holds” is made***' (for proof please refer to the App. B.2. of the paper). And the authors also mention that when $\prod \limits_{t=1}^{T}\pi_{Q_t}(\textbf{y}\_{\leq t}\,\|\,\tilde{Y}\_{t-1})$ approximates the real $\pi_P(\textbf{y})$ , the variance of the Importance Sampling estimate is relatively smaller that that of the Naive Monte Carlo, '**which is often the case for estimators when a proposal distribution is chosen judiciously (Rubinstein and Kroese, 2016).**' (see [[paper]](https://www.wiley.com/en-us/Simulation+and+the+Monte+Carlo+Method%2C+3rd+Edition-p-9781118632161))
 
 ### Experiments
 
-To test the performance of CPSBS and its HT estimator, they are tested on the sentence-level BLEU together with the Monte Carlo estimator, Sum and Sample estimator, an estimator for Stochastic Beam Search. To observe behaviors of the HT estimator under both high- and low-entropy setting, the model's distribution is annealed as: $p_\tau(y_t\,|\,\textbf{y}_{<t})\propto p\,(y_t\,|\,\textbf{y}_{<t})^{\frac{1}{\tau}}$ .
+To test the performance of CPSBS and its HT estimator, they are tested on the sentence-level BLEU together with the Monte Carlo estimator, Sum and Sample estimator, an estimator for Stochastic Beam Search. To observe behaviors of the HT estimator under both high- and low-entropy setting, the model's distribution is annealed as: $p_\tau(y_t\,\|\,\textbf{y}\_{<t})\propto p\,(y_t\,\|\,\textbf{y}\_{<t})^{\frac{1}{\tau}}$ .
 
 - ***Additional estimators to be compared with***
 
@@ -290,7 +297,7 @@ the score is defined as : $f(\textbf{y})=BLEU(\textbf{x},\,\textbf{y})$ where if
 
 **Conditional Entropy Estimation**:
 
-To estimate a model's conditional entropy: $f(\textbf{y})=-log\,p(\textbf{y}\,|\,\textbf{x})$ where $\textbf{x}$ can be seen as the initial information necessary to generate the first set of beams, i.e., $Y_1$ . And see in [Figure 2.b](#12) to see the RMSE for the conditional entropy estimation.
+To estimate a model's conditional entropy: $f(\textbf{y})=-log\,p(\textbf{y}\,\|\,\textbf{x})$ where $\textbf{x}$ can be seen as the initial information necessary to generate the first set of beams, i.e., $Y_1$ . And see in [Figure 2.b](#12) to see the RMSE for the conditional entropy estimation.
 
 ![](https://raw.githubusercontent.com/A-Chicharito-S/img/detailed_paper_2/pic3.png)
 
@@ -304,7 +311,7 @@ The RMSE evaluations for above-mentioned BLUE and conditional entropy are:
 
 **Diverse Sampling**:
 
-To test the diversity of the sampled translations $Y_T\sim P$, where $w_n=p(\textbf{y}_{\leq t}^{(n)})/(1-p(\textbf{y}_{\leq t}^{(n)}))$ at each time-step $t$ as suggested, an $n$-gram diversity metric is proposed: $D=\sum_{n=1}^{4}\frac{\#unique\,n-grams\,in\,K\,strings}{\#\,n-grams\,in\,K\,strings}$ and three decoding strategy: SBS, DiverseBS and ancestral sampling are compared with CPSBS, results are as follows:
+To test the diversity of the sampled translations $Y_T\sim P$, where $w_n=p(\textbf{y}\_{\leq t}^{(n)})/(1-p(\textbf{y}\_{\leq t}^{(n)}))$ at each time-step $t$ as suggested, an $n$-gram diversity metric is proposed: $D=\sum_{n=1}^{4}\frac{\#unique\,n-grams\,in\,K\,strings}{\#\,n-grams\,in\,K\,strings}$ and three decoding strategy: SBS, DiverseBS and ancestral sampling are compared with CPSBS, results are as follows:
 
 ![](https://raw.githubusercontent.com/A-Chicharito-S/img/detailed_paper_2/pic5.png)
 
