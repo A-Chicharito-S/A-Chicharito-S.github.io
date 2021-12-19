@@ -72,7 +72,7 @@ Where:
 <div>
 $$Q_t(Y_t\,\|\,Y_{t-1})\overset{def}{\propto}
 \begin{cases}
-\prod \limits_{n=1}^{N}w_n & \text{if   |Y|=K}\\
+\prod \limits_{n=1}^{N}w_n & \text{if \quad |Y|=K}\\
 0& \textbf{otherwise} 
 \end{cases}\qquad \qquad \qquad \qquad \qquad (3)$$
 </div>
@@ -136,7 +136,7 @@ $$Z_t\overset{def}{=}\sum_{Y_t\subseteq B_t,\,|Y_t|=K} \prod \limits_{n=1}^{N}w_
 Where the notation $\prod \limits_{n=1}^{N}w_n$ still follows the meaning of [this](#2) . And following Kulesza and Taskar (2012, see [here](https://www.nowpublishers.com/article/Details/MAL-044)), an iterative algorithm can be proposed: ( For detailed pseudocode please refer to the App. C of the paper)
     
 <div>
-$$W\binom{n}{k}=\begin{cases} 1& \text{ \textbf{if} k=0 \textbf{or} n=k }\\ W\binom{n-1}{k}+w_nW\binom{n-1}{k-1}& \text{ \textbf{if} k }\in (0,n)\\ 0& \text{ \textbf{otherwise} } \end{cases}\qquad \qquad \qquad \qquad \qquad (8)$$
+$$W\binom{n}{k}=\begin{cases} 1& \text{if} \quad \text{k=0} \text{or} \quad \text{n=k}}\\ W\binom{n-1}{k}+w_nW\binom{n-1}{k-1}& \text{if} \quad \text{k}\in (0,n)\\ 0& \text{ otherwise } \end{cases}\qquad \qquad \qquad \qquad \qquad (8)$$
 </div>
     
 <a name='3'></a>
@@ -147,17 +147,17 @@ Step 2: Sample from $Q_t(·\,\|\,Y_{t-1})$ (normalized) .
 
 After the distribution $Q_t(·\,\|\,Y_{t-1})$ is normalized, the following algorithm is proposed by the authors:
 
-> 1: $Y_t \longleftarrow \emptyset$  (*Initialization*)
->
-> 2: **for**$\,\,n=N,\,...\,,1$ :
->
-> &ensp&ensp&ensp $\qquad k\longleftarrow K-\|Y_t\|$  (*Number of remaining elements*)
->
-> &ensp&ensp&ensp Add the $n^{th}$ element of $B_t$ to $Y_t$ with probability:
->
-> &ensp&ensp&ensp&ensp&ensp $\frac{w_n\,W\binom{n-1}{k-1}}{W\binom{n}{k}}$
->
-> 3: **return** $Y_t$  (Guaranteed to have size $K$)
+1: $Y_t \longleftarrow \emptyset$  (*Initialization*)<br>
+<br>
+2: **for**$\,\,n=N,\,...\,,1$ :<br>
+
+&ensp&ensp&ensp $\qquad k\longleftarrow K-\|Y_t\|$  (*Number of remaining elements*)<br>
+
+&ensp&ensp&ensp Add the $n^{th}$ element of $B_t$ to $Y_t$ with probability:<br>
+
+&ensp&ensp&ensp&ensp&ensp $\frac{w_n\,W\binom{n-1}{k-1}}{W\binom{n}{k}}$<br>
+
+3: **return** $Y_t$  (Guaranteed to have size $K$)<br>
 
 And I explain the **why** the probability is $\frac{w_n\,W\binom{n-1}{k-1}}{W\binom{n}{k}}$ and **why** it is guaranteed to have size $K$ as follows:
 
@@ -311,7 +311,7 @@ The RMSE evaluations for above-mentioned BLUE and conditional entropy are:
 
 **Diverse Sampling**:
 
-To test the diversity of the sampled translations $Y_T\sim P$, where $w_n=p(\textbf{y}\_{\leq t}^{(n)})/(1-p(\textbf{y}\_{\leq t}^{(n)}))$ at each time-step $t$ as suggested, an $n$-gram diversity metric is proposed: $D=\sum_{n=1}^{4}\frac{\#unique\,n-grams\,in\,K\,strings}{\#\,n-grams\,in\,K\,strings}$ and three decoding strategy: SBS, DiverseBS and ancestral sampling are compared with CPSBS, results are as follows:
+To test the diversity of the sampled translations $Y_T\sim P$, where $w_n=p(\textbf{y}\_{\leq t}^{(n)})/(1-p(\textbf{y}\_{\leq t}^{(n)}))$ at each time-step $t$ as suggested, an $n$-gram diversity metric is proposed: $D=\sum_{n=1}^{4} \frac{#unique\,n-grams\,in\,K\,strings}{#\,n-grams\,in\,K\,strings}$ and three decoding strategy: SBS, DiverseBS and ancestral sampling are compared with CPSBS, results are as follows:
 
 ![](https://raw.githubusercontent.com/A-Chicharito-S/img/detailed_paper_2/pic5.png)
 
