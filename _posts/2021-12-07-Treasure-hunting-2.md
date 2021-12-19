@@ -109,7 +109,7 @@ $$P(Y_T)\,=\sum_{Y_1}...\sum_{Y_{T-1}}\prod \limits_{t=1}^{T}Q_t\,(\,Y_t\,|\,Y_{
     
 <a name='5'></a>
 
-And the summation is actually computing the marginal distribution out of a joint distribution. The above marginal distribution tells us that: for the final beam set $Y_T$ of size $K$, there're roughly (**less than**): $\|\#Y_1\|\times \|\#Y_2\|\times ··· \times \|\#Y_{T-1}\| \times \|\#Y_T\|$ available values to be assigned with, where $\|\text{#}Y_t\|$ denotes the number of possible values for set $Y\_t$ at time-step $t$ . And the authors state that: '**Note the structural zeros of $Q\_t$ prevent any incompatible sequence of beams**' , which can be answered by the following example:
+And the summation is actually computing the marginal distribution out of a joint distribution. The above marginal distribution tells us that: for the final beam set $Y_T$ of size $K$, there're roughly (**less than**): $\|\text{#}Y_1\|\times \|\text{#}Y_2\|\times ··· \times \|\text{#}Y_{T-1}\| \times \|\text{#}Y_T\|$ available values to be assigned with, where $\|\text{#}Y_t\|$ denotes the number of possible values for set $Y\_t$ at time-step $t$ . And the authors state that: '**Note the structural zeros of $Q\_t$ prevent any incompatible sequence of beams**' , which can be answered by the following example:
 
 For a $K=2$ CPSBS with a vocabulary $\mathcal{V}=\{1,\,2,\,...\,,7\}$ . If at $t=1$ , $Y_1$ can be: $\{BOS+1,\,BOS+3\}$ , then at $t=2$,  $Y\_2$ can be: $\{BOS+12,\,BOS+15,\,BOS+32,\,BOS+34\}$ .
 
@@ -136,7 +136,7 @@ $$Z_t\overset{def}{=}\sum_{Y_t\subseteq B_t,\,|Y_t|=K} \prod \limits_{n=1}^{N}w_
 Where the notation $\prod \limits_{n=1}^{N}w_n$ still follows the meaning of [this](#2) . And following Kulesza and Taskar (2012, see [here](https://www.nowpublishers.com/article/Details/MAL-044)), an iterative algorithm can be proposed: ( For detailed pseudocode please refer to the App. C of the paper)
     
 <div>
-$$W\binom{n}{k}=\begin{cases} 1& \text{if k=0 or n=k}\\ W\binom{n-1}{k}+w_nW\binom{n-1}{k-1}& \text{if k \in (0,n)}\\ 0& \text{otherwise} \end{cases}\qquad \qquad \qquad \qquad \qquad (8)$$
+$$W\binom{n}{k}=\begin{cases} 1& \text{if k=0 or n=k}\\ W\binom{n-1}{k}+w_nW\binom{n-1}{k-1}& \text{if k} \in (0,n)\\ 0& \text{otherwise} \end{cases}\qquad \qquad \qquad \qquad \qquad (8)$$
 </div>
     
 <a name='3'></a>
