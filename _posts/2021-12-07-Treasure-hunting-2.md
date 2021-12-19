@@ -155,6 +155,7 @@ After the distribution $Q_t(·\,\|\,Y_{t-1})$ is normalized, the following algor
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add the $n^{th}$ element of $B_t$ to $Y_t$ with probability:<br>
 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$\frac{w_n\,W\binom{n-1}{k-1}}{W\binom{n}{k}}$<br>
 
 3: **return** $Y_t$  (Guaranteed to have size $K$)<br>
