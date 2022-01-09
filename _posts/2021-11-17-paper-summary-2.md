@@ -1,7 +1,7 @@
 ---
 title: Paper Summary 2(special edition)
 categories:
-- Paper summary
+- Paper Summary
 feature_image: "https://picsum.photos/2560/600?image=872"
 ---
 <head>
