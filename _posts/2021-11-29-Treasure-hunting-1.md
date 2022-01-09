@@ -1,7 +1,7 @@
 ---
-title: Treasure hunting 1
+title: Treasure Hunting 1
 categories:
-- Treasure hunting
+- Treasure Hunting
 feature_image: "https://picsum.photos/2560/600?image=872"
 ---
 <head>
@@ -18,7 +18,7 @@ feature_image: "https://picsum.photos/2560/600?image=872"
 
 ## Bird’s Eye: Probing for Linguistic Graph Structures with a Simple Information-Theoretic Approach
 
-Here I'm going to present you the first episode of my '**Treasure hunting**' series, unlike the '**Paper summary**' series, in which a group of papers will be roughly analyzed based on main ideas and motivations. In this series, one paper will be deeply analyzed at a time, focusing not only on the main idea, motivation, shining points but also the writing skills, experimental results etc.
+Here I'm going to present you the first episode of my '**Treasure Hunting**' series, unlike the '**Paper Summary**' series, in which a group of papers will be roughly analyzed based on main ideas and motivations. In this series, one paper will be deeply analyzed at a time, focusing not only on the main idea, motivation, shining points but also the writing skills, experimental results etc.
 
 Today I'm going to introduce the paper '**Bird’s Eye: Probing for Linguistic Graph Structures with a Simple Information-Theoretic Approach**' by *Yifan Hou* and *Mrinmaya Sachan*, you can find the paper [[here]](https://aclanthology.org/2021.acl-long.145.pdf) 
 
