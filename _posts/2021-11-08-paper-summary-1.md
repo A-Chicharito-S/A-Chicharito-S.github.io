@@ -1,7 +1,7 @@
 ---
 title: Paper Summary 1
 categories:
-- Paper summary
+- Paper Summary
 feature_image: "https://picsum.photos/2560/600?image=872"
 ---
 <head>
