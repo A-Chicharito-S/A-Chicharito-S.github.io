@@ -40,7 +40,8 @@ This is the third paper summary focusing on text summarizations, which I think i
 
 - **Architecture**:
 
-![](https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_3/pic1.png)
+<div align=center><img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_3/pic1.png" /></div>
+
 
 
 
@@ -67,7 +68,8 @@ This is the third paper summary focusing on text summarizations, which I think i
 
 - **Architecture**:
 
-![](https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_3/pic2.png)
+<div align=center><img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_3/pic2.png" /></div>
+
 
 - **Paper**:
 
@@ -83,7 +85,7 @@ This is the third paper summary focusing on text summarizations, which I think i
   
   ​      It proposes five different pre-training objectives to train BART, namely: Token Masking, Token Deletion, Text Infilling, Sentence Permutation, Document Rotation.
   
-  ![](https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_3/pic4.png)
+  <div align=center><img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_3/pic4.png" /></div>
   
   For **Token Masking**, it simply follows BERT ;
   
@@ -97,7 +99,7 @@ This is the third paper summary focusing on text summarizations, which I think i
   
   When **fine-tuning**, for classification tasks, the same sentence sequence is fed into the encoder and decoder, and the final hidden state is used for prediction; for generation tasks, the BART architecture naturally has a decoder; for NMT especially, BART uses a randomly initialized encoder (same architecture as the pre-trained encoder in BART) to serve as the encoder for another language, thus BART can preserve its pre-trained knowledge on the monolingual data.
   
-  ![](https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_3/pic5.png)
+  <div align=center><img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_3/pic5.png" /></div>
   
   For comparison, the authors also propose several pre-training objectives: **a**. Language Model (a left-to-right transformer) ; **b**. Permuted Language Model (XLNet based, sample 1/6 tokens and generate them auto-regressively in a random order) ; **c**. Masked Language Model (BERT based) ; **d**. Multitask Language Model (UniLM based, 1/6 left-to-right, 1/6 right-to-left, 1/3 unmasked, 1/3 with the first 50% unmasked and the rest 50% of a left-to-right mask) ; **e**. Masked Seq-to-Seq (MASS based, a span containing 50% words is masked then a seq-to-seq model is trained to predict them)  And for **b**, **c**, **d**, two-stream attention is used (see paper [[here]](https://proceedings.neurips.cc/paper/2019/file/dc6a7e655d7e5840e66733e9ee67cc69-Paper.pdf)).
 
@@ -106,7 +108,7 @@ This is the third paper summary focusing on text summarizations, which I think i
 
 - **Architecture**: 
 
-  ![](https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_3/pic3.png)
+<div align=center><img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_3/pic3.png" /></div>
 
 - **paper**
 
@@ -129,7 +131,7 @@ This is the third paper summary focusing on text summarizations, which I think i
 
 - **Architecture**:<a name='1'></a>
 
-  ![](https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_3/pic6.png)
+<div align=center><img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_3/pic6.png" /></div>
 
 
 ## Survey
@@ -180,7 +182,8 @@ This is the third paper summary focusing on text summarizations, which I think i
 
 - **Architecture**:
 
-![](https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_3/pic7.png)
+<div align=center><img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_3/pic7.png" /></div>
+
 - **Paper**:
 
 ###                                ***RefSum*: Refactoring Neural Summarization**   [[paper]](https://arxiv.org/abs/2104.07210) 
@@ -193,7 +196,7 @@ This is the third paper summary focusing on text summarizations, which I think i
 
 **b**. *Base-Meta Learning Gap*: Summarization and combination of models use different architectures.
 
-**c**. *Train-Test Distribution Gap*: Let $Hypo_{base}$, $Hypo^{'}_{base}$ denote the training / test outputs from summarization models in **Base Stage**,  and $Hypo_{meta}$, $Hypo^{'}_{meta}$ (both are the outputs from **Base Stage**) denote that of the aggregation model in **Meta Stage**. The gap lies between the distributions of $Hypo_{meta}$, $Hypo^{'}_{meta}$. 
+**c**. *Train-Test Distribution Gap*: Let $Hypo\_{base}$, $Hypo^{'}\_{base}$ denote the training / test outputs from summarization models in **Base Stage**,  and $Hypo\_{meta}$, $Hypo^{'}\_{meta}$ (both are the outputs from **Base Stage**) denote that of the aggregation model in **Meta Stage**. The gap lies between the distributions of $Hypo\_{meta}$, $Hypo^{'}\_{meta}$. 
 
 ​       To address the above challenges, this work proposes a general framework that can both summarize and aggregate.
 
@@ -220,7 +223,7 @@ C^{*}&=REFACTOR\,(D,\,\mathcal{C},\,\theta^{refactor}) \\
 \end{split}
 $$
 
-​      where $\textbf{D},\,\textbf{C}_i$ are representations encoded by BERT and $SCORE(·)$ is a similarity scoring function implemented by BERT and Transformer blocks. The candidate set $\mathcal{C}$ is constructed by enumerating possible combinations of sentences in document $D$ where unreasonable combinations are pruned to control the sentence quality in $\mathcal{D}$.  And when **fine-tuning**, the previous pre-trained model takes outputs from some base systems to fit the distribution of specific types of data. As a unified framework, the objective is a ranking loss: $L=\sum_{i}\sum_{j>i}max(0,\,SCORE(\textbf{D},\,\textbf{C}_j)-SCORE(\textbf{D},\,\textbf{C}_i)+(j-i)*\lambda_c)$ where $ROUGE(C_i,\,\hat{C})>ROUGE(C_j,\,\hat{C})$ for $i<j$ and $\hat{C}$ is the reference summary. In application, the model can serve as either a model in **Base Stage** generating summaries or a combination model in **Meta Stage** complementing different candidates.
+​      where $\textbf{D},\,\textbf{C}\_i$ are representations encoded by BERT and $SCORE(·)$ is a similarity scoring function implemented by BERT and Transformer blocks. The candidate set $\mathcal{C}$ is constructed by enumerating possible combinations of sentences in document $D$ where unreasonable combinations are pruned to control the sentence quality in $\mathcal{D}$.  And when **fine-tuning**, the previous pre-trained model takes outputs from some base systems to fit the distribution of specific types of data. As a unified framework, the objective is a ranking loss: $L=\sum\_{i}\sum\_{j>i}max(0,\,SCORE(\textbf{D},\,\textbf{C}\_j)-SCORE(\textbf{D},\,\textbf{C}\_i)+(j-i)\*\lambda\_c)$ where $ROUGE(C\_i,\,\hat{C})>ROUGE(C\_j,\,\hat{C})$ for $i<j$ and $\hat{C}$ is the reference summary. In application, the model can serve as either a model in **Base Stage** generating summaries or a combination model in **Meta Stage** complementing different candidates.
 
 ​       **Highlights**
 ​             This architecture is quite simple and effective. The idea of unification is very inspiring, which can be am alternative perspective in the future work.
@@ -246,11 +249,11 @@ $$
   
   ​      For BERT, in **extractive summarization**, a linear layer is added after the encoder's outputs to classify which sentence is selected with input format of $[CLS]\,DW_1,\,...,DW_n\,[SEP]SW_1,\,...,SW_m$ where $DW_i$ is the $i$-th word of the document and $SW_j$ is the $j$-th word of the sentence to be classified. For **concept detection**, the model classify whether the word in a sequence is part of a concept extracted by a TF-IDF algorithm and the **paraphrasing detection** task asks the model to decide whether two input sentences $[CLS]\,Sent_1\,[SEP]\,Sent_2$ express the same idea with different phrasing. The **language modeling** task is directly from BERT. Note that when training, the **paraphrasing detection** task uses the MSRP dataset to train (which introduces new data) and the rest tasks all take the same dataset to do multitask learning (which in fact provides a multi-view towards the same data for the model). The overall training strategy for BERT is shown as follows.
   
-  <img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_3/pic8.png" style="zoom:80%;" />
+  <div align=center><img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_3/pic8.png" style="zoom:80%;" /></div>
   
   ​      And the following figure is the training settings for T5.
   
-  <img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_3/pic9.png" style="zoom:60%;" />
+  <div align=center><img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_3/pic9.png" style="zoom:60%;" /></div>
   
   And when training, the multiple tasks are trained consecutively, in detail, after task 1 is trained, task 2 is to be trained and son on.
 
