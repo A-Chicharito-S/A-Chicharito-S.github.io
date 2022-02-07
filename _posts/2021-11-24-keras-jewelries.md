@@ -41,7 +41,7 @@ you'll find that the '**new_model**' will throw an error indicating that since i
 
 Thus, I suggest using the following way to create a model:
 ```python
-def make_model('your_grguments_here'):
+def make_model('your_arguments_here'):
     x_1 = Input(shape=('shape of input x_1'))
     ...
     x_n = Input(shape=('shape of input x_n'))
