@@ -6,4 +6,4 @@ feature_text: |
 feature_image: "https://picsum.photos/1300/400?image=989"
 
 ---
-I am a undergrad majoring in Software Engineering, currently obsessed with Natural Language Processing (NLP).
+I am a undergrad majoring in Software Engineering, currently obsessed with Natural Language Processing (NLP). [[contact me]](alexchicharitoshen@gmail.com)
