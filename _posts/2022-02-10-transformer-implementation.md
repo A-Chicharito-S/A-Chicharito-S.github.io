@@ -61,12 +61,15 @@ class TransformerEmbedding(nn.Module):
 ```
 The above code is the "**\_\_init\_\_**" method of our Embedding. To be specific, it uses the **nn.Embedding** module to map discrete digits (0, 1, 2, ...) into dense vectors of size "**dim**". By passing "**embedding_matrix**" and "**is_frozen**" parameters, we can initialize the embedding table and decide whether it is trainable. We also can use the "**self.register_buffer**" method (inherited from "**nn.Module**", and can be quickly accessed as a constant) to store the **positional encoding**, which is computed by:
 
+<div>
 $$
 \begin{split}
 PE_{(pos,\,2i)} &= sin(pos\,/\,10000^{2i\,/\,d_{model}}) \\
 PE_{(pos,\,2i+1)} &= cos(pos\,/\,10000^{2i\,/\,d_{model}})
 \end{split}
 $$
+</div>
+
 The above formula tells us for a token at position $pos$ in a sequence, the **positional encoding** of its even dimension is a $sin$ function and that of odd dimension is a $cos$ function. The wavelength for dimension $2i$ and $2i+1$ is $2\pi·10000^{2i\,/d_{model}}\in[2\pi,\,10000·2\pi]$ and the max length that **positional encoding** can present is roughly viewed as $10000$ (since the max period is $10000·2\pi$). One good thing about using trigonometric functions is: $sin(pos+k)=sin(pos)cos(k)+cos(pos)sin(k)$ and $cos(pos+k)=cos(pos)cos(k)-sin(pos)sin(k)$; thus, the relationship between the $pos$-th position and $pos+k$-th position in the sentence can be view as a linear transformation $PE_{pos}\longrightarrow PE_{pos+k}$ where the coefficients are constants about $k$, namely, $sin(w_i·k)$ and $cos(w_i·k)$ (see discussion [[here]](https://kazemnejad.com/blog/transformer_architecture_positional_encoding/#the-intuition)).
 
 The implementation is:
@@ -84,7 +87,9 @@ The implementation is:
         return pe
 ```
 
-where noticing the **div_term** is actually: $\frac{1}{10000^{2i/d_{model}}}=e^{log(\frac{1}{10000^{2i/d_{model}}})}=e^{-\frac{2i}{d_{model}}log10000}$
+where noticing the **div_term** is actually: 
+
+$$\frac{1}{10000^{2i/d_{model}}}=e^{log(\frac{1}{10000^{2i/d_{model}}})}=e^{-\frac{2i}{d_{model}}log10000}$$
 
 And we can defined the computation process as:
 
@@ -102,12 +107,16 @@ Note that after "**self.embedding(inputs)**" it is multiplied by $\sqrt{d_{model
 ### b. Multi-Head Attention
 
 The Attention layer follows the following computation operation: $Attention(Q,\,K,\,V)=softmax(\frac{Q·K^{T}}{\sqrt{d_k}})·V$, and the term "**Multi-Head**" can be roughly treated as performing this operation multiple times for the same set of $Q,\,K,\,V$. To be specific, the **Multi-Head Attention** is computed by:
+
+<div>
 $$
 \begin{split}
 MultiHead(Q,\,K,\,V) &= Concat(head_1,\,...,\,head_h)W^O \\
 where\,\,head_i &= Attention(QW^Q_i,\,KW^K_i,\,VW^V_i)
 \end{split}
 $$
+</div>
+
 The implementation is:
 
 ```python
@@ -172,7 +181,9 @@ $$(batch\_size,\,seq\_len\_q,\,dim\stackrel{W^{Q}}{\longrightarrow}dim)\stackrel
 
 And the "**Multi-Head**" operation is actually performed by one matrix (in our example: $W^Q$). The following codes are quite easy to understand. Note that [[1]](#1), [[2]](#2), [[3]](#3) all implement the $Attention(Q,\,K,\,V)=softmax(\frac{Q·K^{T}}{\sqrt{d_k}})·V$ as another callable function (such as "**def attention(query, key, value, mask=None, dropout=None):**") and masking the padded positions of attention score "**att_score = att_score.masked_fill(mask, 0)**" is not in [[2]](#2) and [[3]](#3). And the usage of "**.reshape()**", "**.view()**", and "**.contiguous()**" is specified [[here]]()
 
-A very important thing is the shape of the mask. Based on the function of the masks, we can simply divide them into two kinds: padding mask (used in **Multi-Head Attention**, both in the Encoder and the Decoder, see [[overall architecture]](#4)) and subsequent mask (used in **Masked Multi-Head Attention**, only in the Decoder, see [[overall architecture]](#4)). A **padded mask** <a name='5'></a> is to mask out the paddings in the sentence, for example: for an input: $[3,\,5,\,8,\,9,\,4,\,0,\,0,\,0]$, the three zeros at the end are just place holders thus should not be considered real words. A **subsequent mask** <a name='6'></a>, however is only used in the decoder, and is of shape: $seq\_len\_outputs\times seq\_len\_outputs$ where $seq\_len\_outputs$ is the sentence length of the "**Outputs**" fed into the Decoder (see [[overall architecture]](#4)). A general sense of the **subsequent mask** is this ($seq\_len\_outputs=3$):
+A very important thing is the shape of the mask. Based on the function of the masks, we can simply divide them into two kinds: padding mask (used in **Multi-Head Attention**, both in the Encoder and the Decoder, see [[overall architecture]](#4)) and subsequent mask (used in **Masked Multi-Head Attention**, only in the Decoder, see [[overall architecture]](#4)). A **padded mask** <a name='5'></a> is to mask out the paddings in the sentence, for example: for an input: $[3,\,5,\,8,\,9,\,4,\,0,\,0,\,0]$, the three zeros at the end are just place holders thus should not be considered real words. A **subsequent mask** <a name='6'></a>, however is only used in the decoder, and is of shape: $seq\\\_len\\\_outputs\times seq\\\_len\\\_outputs$ where $seq\\\_len\\\_outputs$ is the sentence length of the "**Outputs**" fed into the Decoder (see [[overall architecture]](#4)). A general sense of the **subsequent mask** is this ($seq\\\_len\\\_outputs=3$):
+
+<div>
 $$
 \begin{bmatrix}
    0 & 1 & 1 \\
@@ -180,6 +191,8 @@ $$
    0 & 0 & 0
   \end{bmatrix}
 $$
+</div>
+
 where the diagonal and below are all set to 0 (or 1) and above the diagonal are all set to 1 (or 0).<a name='7'></a>
 
 ### c. Add&Norm
