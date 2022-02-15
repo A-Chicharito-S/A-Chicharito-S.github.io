@@ -27,11 +27,11 @@ This is the blog about the implementation of Transformer from [Attention Is All 
 
 The following picture is from **Attention Is All You Need** and illustrates the overall architecture of the Transformer.
 
-<img src="https://raw.githubusercontent.com/A-Chicharito-S/img/pytorch_learning_1/pic1.png" style="zoom:80%;" />
+<div align=center><img src="https://raw.githubusercontent.com/A-Chicharito-S/img/pytorch_learning_1/pic1.png" style="zoom:80%;" /></div>
 <a name='4'></a>
 We can see that the Transformer is mainly composed of two parts: the Encoder and the Decoder. Both of which are then staked by **N** encoder/decoder blocks. And for each block, it can be decoupled into the following components: **a**. Multi-Head Attention; **b**. Add&Norm; **c**. Feed Forward. And there is an embedding module that embeds the discrete digits into neural-network-friendly dense vectors.
 
-For an NLP task, given the source sequence $X=(BOS,\,x_1,\,...,x_n,\,EOS)$ and its target $Y=(BOS,\,y_1,\,...,y_m,\,EOS)$, the Transformer feeds $x$ as '**inputs**' and embeds it into high-dimension dense vectors, which later are further encoded by the Encoder. When **training**, Target $y$ is shifted right (the last token $EOS$ is removed) and embedded to be fed into the Decoder as **Outputs**, where an interaction with the final outputs from the Encoder is performed in the Multi-Head Attention module. The final outputs from the Decoder are later projected to the target vocabulary size to produce the prediction $\hat{Y}=(\hat{y}_1,\,...,\hat{y}_m,\,EOS)$ When **testing**, at first there will only be $BOS$ fed into the Decoder to produce the first predicted token $\hat{y}_1$, and later $(BOS,\,\hat{y}_1)$ is fed and so on. (This process is called **auto-regressive** since the output from the last state is used as input for the current state.)
+For an NLP task, given the source sequence $X=(BOS,\,x_1,\,...,x_n,\,EOS)$ and its target $Y=(BOS,\,y_1,\,...,y_m,\,EOS)$, the Transformer feeds $x$ as '**inputs**' and embeds it into high-dimension dense vectors, which later are further encoded by the Encoder. When **training**, Target $y$ is shifted right (the last token $EOS$ is removed) and embedded to be fed into the Decoder as **Outputs**, where an interaction with the final outputs from the Encoder is performed in the Multi-Head Attention module. The final outputs from the Decoder are later projected to the target vocabulary size to produce the prediction $\hat{Y}=(\hat{y}\_1,\,...,\hat{y}\_m,\,EOS)$ When **testing**, at first there will only be $BOS$ fed into the Decoder to produce the first predicted token $\hat{y}\_1$, and later $(BOS,\,\hat{y}\_1)$ is fed and so on. (This process is called **auto-regressive** since the output from the last state is used as input for the current state.)
 
 ## Components
 
@@ -405,7 +405,7 @@ def teacher_forcing(self, inputs_mask, from_encoder, targets):
 
     return outputs
 ```
-During training the Transformer adapts the **teacher-forcing training strategy**, which means the decoder at time-step $t$ will always be fed the ground truth output token $y_t$ instead of using its own prediction $\hat{y}_t$ from time-step $t-1$. Another interesting observation is that **the final output is not the probabilities but the log of them**. (since **F.log_softmax()** is used instead of **F.softmax()**) This is because for loss computing we use the "**nn.KLDivLoss**", which expects the predictions to be log probabilities. Finally we need to talk about the masks used here: **a**. the **padded mask** for the Encoder is used to mask the paddings in the inputs; **b**. the **subsequent mask** used in the Decoder is a little bit different from what we discussed [[here]](#7), it is actually the combination of a standard **subsequent mask** and a **padded mask**, which function is **not only** to prevent from attending to future tokens ($y_{t+1},\,y_{t+2},\,...$) at time-step $t$ **but also** to mask out the paddings; **c**. in [[2]](#2) and [[3]](#3) the **padded mask** in the Decoder is used for masking the paddings in source (input, which serves as **K** in **Multi-Head Attention**), however that of [[1]](#1) is used for masking the paddings in targets (outputs, which serves as **Q** in **Multi-Head Attention**), and here I follow the implementation of [[2]](#2) and [[3]](#3).
+During training the Transformer adapts the **teacher-forcing training strategy**, which means the decoder at time-step $t$ will always be fed the ground truth output token $y_t$ instead of using its own prediction $\hat{y}\_t$ from time-step $t-1$. Another interesting observation is that **the final output is not the probabilities but the log of them**. (since **F.log_softmax()** is used instead of **F.softmax()**) This is because for loss computing we use the "**nn.KLDivLoss**", which expects the predictions to be log probabilities. Finally we need to talk about the masks used here: **a**. the **padded mask** for the Encoder is used to mask the paddings in the inputs; **b**. the **subsequent mask** used in the Decoder is a little bit different from what we discussed [[here]](#7), it is actually the combination of a standard **subsequent mask** and a **padded mask**, which function is **not only** to prevent from attending to future tokens ($y_{t+1},\,y_{t+2},\,...$) at time-step $t$ **but also** to mask out the paddings; **c**. in [[2]](#2) and [[3]](#3) the **padded mask** in the Decoder is used for masking the paddings in source (input, which serves as **K** in **Multi-Head Attention**), however that of [[1]](#1) is used for masking the paddings in targets (outputs, which serves as **Q** in **Multi-Head Attention**), and here I follow the implementation of [[2]](#2) and [[3]](#3).
 
 At last, we now introduce implementation of the inference:
 
@@ -423,11 +423,10 @@ for the decoding methods ("**greedy**" and "**beam_search**"), I did a minor adj
 
 For "**greedy**":
 
-<img src="https://raw.githubusercontent.com/A-Chicharito-S/img/pytorch_learning_1/pic2.png" style="zoom:80%;" />
+<div align=center><img src="https://raw.githubusercontent.com/A-Chicharito-S/img/pytorch_learning_1/pic2.png" style="zoom:80%;" /></div>
 For "**beam search**":
 
-<img src="https://raw.githubusercontent.com/A-Chicharito-S/img/pytorch_learning_1/pic3.png" style="zoom:76%;" />
-
+<div align=center><img src="https://raw.githubusercontent.com/A-Chicharito-S/img/pytorch_learning_1/pic3.png" style="zoom:76%;" /></div>
 
 
 
