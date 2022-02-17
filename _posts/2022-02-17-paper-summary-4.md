@@ -47,11 +47,11 @@ This summary specifically focuses on the low-resource scenarios for text summari
 
 The back-translation architecture:
 
-<img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_4/pic1.png" style="zoom:75%;" />
+<div align=center><img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_4/pic1.png" style="zoom:75%;" /></div>
 
 The "double" back-translation architecture (performs worse than above):
 
-![](https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_4/pic2.png)
+<div align=center><img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_4/pic2.png" /></div>
 
 - **Paper**:
 
@@ -74,7 +74,8 @@ The "double" back-translation architecture (performs worse than above):
 
 - **Architecture**:
 
-![](https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_4/pic3.png)
+<div align=center><img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_4/pic3.png" /></div>
+
 
 - **Paper**:
 
@@ -97,7 +98,7 @@ The "double" back-translation architecture (performs worse than above):
 
 - **Architecture**:
 
-<img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_4/pic4.png" style="zoom:85%;" />
+<div align=center><img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_4/pic4.png" style="zoom:85%;" /></div>
 
 - **Paper**:
 
@@ -113,7 +114,7 @@ The "double" back-translation architecture (performs worse than above):
 
   ​      To achieve the augmentation without using any extra data, this paper proposes three possible solutions: **a**. synthesis via paraphrasing with GPT-2; **b**. augmentation with sample mixing; **c**. curriculum learning. For **paraphrasing**, the original summaries are paraphrased using the GPT-2 model. And for **sample mixing**, the original idea is to feed two sentences $x, \,x^{'}$ into the same architecture and mix their representations with a proportion of $\lambda:1-\lambda$ at some layer and then the mixed representation will produce a probability distribution which indicates the "mixed" distribution of words in $x, \, x^{'}$, which can be illustrated as:
   
-  <img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_4/pic5.png" style="zoom:75%;" />
+<div align=center><img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_4/pic5.png" style="zoom:75%;" /></div>
   
   where the KL divergence between the predicted distribution $\hat{y}$ and the "mixed" real distribution will serve as the loss function. In the paper, the authors propose MixGen, which has a decoder where for **training**, the ground truth distribution at each time-step $t\in[1,\,min(|x|,\,|x^{'}|\,)]$ will be:
 
@@ -128,14 +129,14 @@ The "double" back-translation architecture (performs worse than above):
 
   ​       And for time-steps that exceed the value of the minimum length of $x,\,x^{'}$, the word distribution will be that of the remaining of the longer sentence. When decoding auto-regressively in **training**, instead of using $argmax()$ to decide which token to predict (in this case it will always be the tokens with a higher weight of $\lambda,\,1-\lambda$), the ground truth token at time-step $t\in\[1,\,min(|x|,\,|x^{'}|\,)\]$ is chosen based on a probability $P_t\sim U(0,\,1)$. The illustration for MixGen is:
 
-![](https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_4/pic6.png)
+<div align=center><img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_4/pic6.png" /></div>
 
 For **curriculum learning**, data are fed to the model with difficulty from low to high, where the difficulty is measured by a pre-defined criterion (in this paper, there are two criteria, namely **specificity** (measured by a classifier) and **ROUGE**)
 
 ​       **Highlights**
 ​             Unfortunately, though the authors have proposed some useful techniques and discussed them under a non-extra data setting, the experiments are quite disappointing:
 
-<img src="C:\Users\Alex Shen\Desktop\img\7.png" style="zoom:75%;" />
+<div align=center><img src="C:\Users\Alex Shen\Desktop\img\7.png" style="zoom:75%;" /></div>
 As shown above, the "shuff." according to the authors is a synthetic baseline constructed by generating 10 samples for each of the original training samples by randomly shuffling the texts, and "+mask" means randomly mask 50% of the texts 50% of the time. As you can see, the training data of "shuff." and "shuff.+mask" though redundant (whose power is reported [[here]](#3)), is much bigger than the original data, which leads to unfair comparison. Also, the pre-training synthetic data experiment did not include the **Mix(n=3)** method.
 
 
@@ -159,7 +160,7 @@ As shown above, the "shuff." according to the authors is a synthetic baseline co
 
   ​      To deal with the disentanglement implicitly in an end-to-end system, this paper proposes to use hierarchical attention mechanisms to attend to **word-level**, **post-level** (or in other words, sentence-level), and **thread-level** features. The overall architecture is shown below.
   
-  ![](https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_4/pic8.png)
+<div align=center><img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_4/pic8.png" /></div>
   
   When **encoding**, for the $i$-th post $P_i$, a word-level BiLSTM encoder $E_{w2w}$ first encodes the word embeddings of $P_i$ to get a sequence of hidden representations $(\textbf{h}\_{i,\,0}^{E_{w2w}},\,...,\,\textbf{h}\_{i,\,p}^{E_{w2w}})$, and the average: $\frac{1}{p}\sum_{j=0}^p\textbf{h}\_{i,\,j}^{E_{w2w}}$ is fed into the BiLSTM post encoder $E^{p2p}$ at time-step $i$. 
   
