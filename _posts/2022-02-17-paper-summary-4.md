@@ -129,7 +129,7 @@ The "double" back-translation architecture (performs worse than above):
 
   ​       And for time-steps that exceed the value of the minimum length of $x,\,x^{'}$, the word distribution will be that of the remaining of the longer sentence. When decoding auto-regressively in **training**, instead of using $argmax()$ to decide which token to predict (in this case it will always be the tokens with a higher weight of $\lambda,\,1-\lambda$), the ground truth token at time-step $t\in\[1,\,min(\|x\|,\,\|x^{'}\|\,)\]$ is chosen based on a probability $P_t\sim U(0,\,1)$. The illustration for MixGen is:
 
-<div align=center><img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_4/pic7.png" style="zoom:75%;" /></div>
+<div align=center><img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_4/pic6.png" /></div>
 
 For **curriculum learning**, data are fed to the model with difficulty from low to high, where the difficulty is measured by a pre-defined criterion (in this paper, there are two criteria, namely **specificity** (measured by a classifier) and **ROUGE**)
 
