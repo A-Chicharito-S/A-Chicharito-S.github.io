@@ -116,7 +116,7 @@ The "double" back-translation architecture (performs worse than above):
   
 <div align=center><img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_4/pic5.png" style="zoom:75%;" /></div>
   
-  where the KL divergence between the predicted distribution $\hat{y}$ and the "mixed" real distribution will serve as the loss function. In the paper, the authors propose MixGen, which has a decoder where for **training**, the ground truth distribution at each time-step $t\in[1,\,min(|x|,\,|x^{'}|\,)]$ will be:
+  where the KL divergence between the predicted distribution $\hat{y}$ and the "mixed" real distribution will serve as the loss function. In the paper, the authors propose MixGen, which has a decoder where for **training**, the ground truth distribution at each time-step $t\in\[1,\,min(\|x\|,\,\|x^{'}\|\,)\]$ will be:
 
 <div>
 ​        $$ WordDistribution(t)=\left\{
