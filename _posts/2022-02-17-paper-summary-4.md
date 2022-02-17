@@ -32,7 +32,7 @@ This summary specifically focuses on the low-resource scenarios for text summari
 
 - **Solution**:
 
-  ​      The idea of augmenting the low-resource annotated data is originated from the "back-translation" idea in NMT. In detail, when doing NMT, if we have a group of labeled data from the source language (e.g., **En**) to the target language (e.g., **Fr**): $Annotated=\{(En\longrightarrow Fr)\_i\}\_{i=1}^N$ and a group of unannotated data in the target language: $Unannotated=\{Fr_j\}\_{j=1}^M$. And usually, the model will be quite insufficiently trained if we only apply the $Annotated$ dataset. Thus, we need to convert the unannotated dataset (in target language) into annotated version. A good method is to apply "**back-translation**", where we first train a model from target (**Fr**) to source (**En**): $Fr\stackrel{bt}{\longrightarrow}En$ using the $Annotated$ dataset. And then we feed the $Unannotated$ dataset into our trained "$bt$" model to generate some synthetic data $En_{syn}$ to finally get our augmented dataset: 
+  ​      The idea of augmenting the low-resource annotated data is originated from the "back-translation" idea in NMT. In detail, when doing NMT, if we have a group of labeled data from the source language (e.g., **En**) to the target language (e.g., **Fr**): $Annotated=\\{(En\longrightarrow Fr)\_i\\}\_{i=1}^N$ and a group of unannotated data in the target language: $Unannotated=\\{Fr_j\\}\_{j=1}^M$. And usually, the model will be quite insufficiently trained if we only apply the $Annotated$ dataset. Thus, we need to convert the unannotated dataset (in target language) into annotated version. A good method is to apply "**back-translation**", where we first train a model from target (**Fr**) to source (**En**): $Fr\stackrel{bt}{\longrightarrow}En$ using the $Annotated$ dataset. And then we feed the $Unannotated$ dataset into our trained "$bt$" model to generate some synthetic data $En_{syn}$ to finally get our augmented dataset: 
   
   $$Augmented=\{(En\longrightarrow Fr)_k\}_{k=1}^{N+M}=\{(En\longrightarrow Fr)_i\}_{i=1}^N+\{(En_{syn}\longrightarrow Fr)_j\}_{j=1}^M$$
   
@@ -127,7 +127,7 @@ The "double" back-translation architecture (performs worse than above):
 ​      \end{array} \right.\qquad for\,\,i\in[1,\,v]$$
 </div>
 
-  ​       And for time-steps that exceed the value of the minimum length of $x,\,x^{'}$, the word distribution will be that of the remaining of the longer sentence. When decoding auto-regressively in **training**, instead of using $argmax()$ to decide which token to predict (in this case it will always be the tokens with a higher weight of $\lambda,\,1-\lambda$), the ground truth token at time-step $t\in\[1,\,min(|x|,\,|x^{'}|\,)\]$ is chosen based on a probability $P_t\sim U(0,\,1)$. The illustration for MixGen is:
+  ​       And for time-steps that exceed the value of the minimum length of $x,\,x^{'}$, the word distribution will be that of the remaining of the longer sentence. When decoding auto-regressively in **training**, instead of using $argmax()$ to decide which token to predict (in this case it will always be the tokens with a higher weight of $\lambda,\,1-\lambda$), the ground truth token at time-step $t\in\[1,\,min(\|x\|,\,\|x^{'}\|\,)\]$ is chosen based on a probability $P_t\sim U(0,\,1)$. The illustration for MixGen is:
 
 <div align=center><img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_4/pic6.png" /></div>
 
