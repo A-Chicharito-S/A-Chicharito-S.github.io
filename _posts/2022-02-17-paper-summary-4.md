@@ -129,7 +129,7 @@ The "double" back-translation architecture (performs worse than above):
 
   ​       And for time-steps that exceed the value of the minimum length of $x,\,x^{'}$, the word distribution will be that of the remaining of the longer sentence. When decoding auto-regressively in **training**, instead of using $argmax()$ to decide which token to predict (in this case it will always be the tokens with a higher weight of $\lambda,\,1-\lambda$), the ground truth token at time-step $t\in\[1,\,min(\|x\|,\,\|x^{'}\|\,)\]$ is chosen based on a probability $P_t\sim U(0,\,1)$. The illustration for MixGen is:
 
-<div align=center><img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_4/pic6.png" /></div>
+<div align=center><img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_4/pic7.png" style="zoom:75%;" /></div>
 
 For **curriculum learning**, data are fed to the model with difficulty from low to high, where the difficulty is measured by a pre-defined criterion (in this paper, there are two criteria, namely **specificity** (measured by a classifier) and **ROUGE**)
 
@@ -137,6 +137,7 @@ For **curriculum learning**, data are fed to the model with difficulty from low 
 ​             Unfortunately, though the authors have proposed some useful techniques and discussed them under a non-extra data setting, the experiments are quite disappointing:
 
 <div align=center><img src="C:\Users\Alex Shen\Desktop\img\7.png" style="zoom:75%;" /></div>
+
 As shown above, the "shuff." according to the authors is a synthetic baseline constructed by generating 10 samples for each of the original training samples by randomly shuffling the texts, and "+mask" means randomly mask 50% of the texts 50% of the time. As you can see, the training data of "shuff." and "shuff.+mask" though redundant (whose power is reported [[here]](#3)), is much bigger than the original data, which leads to unfair comparison. Also, the pre-training synthetic data experiment did not include the **Mix(n=3)** method.
 
 
