@@ -136,7 +136,7 @@ For **curriculum learning**, data are fed to the model with difficulty from low 
 ​       **Highlights**
 ​             Unfortunately, though the authors have proposed some useful techniques and discussed them under a non-extra data setting, the experiments are quite disappointing:
 
-<div align=center><img src="C:\Users\Alex Shen\Desktop\img\7.png" style="zoom:75%;" /></div>
+<div align=center><img src="https://raw.githubusercontent.com/A-Chicharito-S/img/paper_summary_4/pic7.png" style="zoom:75%;" /></div>
 
 As shown above, the "shuff." according to the authors is a synthetic baseline constructed by generating 10 samples for each of the original training samples by randomly shuffling the texts, and "+mask" means randomly mask 50% of the texts 50% of the time. As you can see, the training data of "shuff." and "shuff.+mask" though redundant (whose power is reported [[here]](#3)), is much bigger than the original data, which leads to unfair comparison. Also, the pre-training synthetic data experiment did not include the **Mix(n=3)** method.
 
