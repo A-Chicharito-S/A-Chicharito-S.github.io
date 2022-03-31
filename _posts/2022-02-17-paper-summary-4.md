@@ -18,7 +18,7 @@ feature_image: "https://picsum.photos/2560/600?image=872"
 
 ## Introduction
 
-This summary specifically focuses on the low-resource scenarios for text summarization where there is a very limited number of data is annotated (and we may or may not have access to some other unannotated data).
+This summary specifically focuses on the low-resource scenarios for text summarization where a very limited number of data is annotated (and we may or may not have access to some other unannotated data).
 
 - **Paper**:
 
