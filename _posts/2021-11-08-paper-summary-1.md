@@ -1,9 +1,12 @@
 ---
+layout: post
 title: Paper Summary 1
-categories:
-- Paper Summary
-feature_image: "https://picsum.photos/2560/600?image=872"
+date: 2015-03-15 16:40:16
+description: paper summary
+tags: formatting links
+categories: sample-posts
 ---
+
 <head>
     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
     <script type="text/x-mathjax-config">
