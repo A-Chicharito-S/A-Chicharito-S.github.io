@@ -1,8 +1,10 @@
 ---
+layout: post
 title: Transformer Implementation
-categories:
-- Coding Skill
-feature_image: "https://picsum.photos/2560/600?image=872"
+date: 2022-02-10 16:40:16
+description: coding skill
+tags: formatting links
+categories: sample-posts
 ---
 <head>
     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
