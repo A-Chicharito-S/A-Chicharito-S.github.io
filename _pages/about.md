@@ -20,4 +20,6 @@ I am a first-year MIIS (Master of Science in Intelligent Information Systems) st
 
 During my undergraduate years, I concentrated on Natural Language Processing (NLP), and had the honor of working with Professor [Xiaojun Wan](https://wanxiaojun.github.io/) on summarization at Peking University, Professor [Xinyu Dai](https://ai.nju.edu.cn/daixinyu/index.htm) on few-shot sentiment analysis at Nanjing Univerisity, and Professor Mengjuan Liu on chatbots at University of Electronic Science and Technology of China.
 
+**Email is the best way to reach me and please feel free to send me an email to discuss research!** I try to read all my emails carefully, but don't hesitate to send another one if you don't receive my reply after one week!
+
 
