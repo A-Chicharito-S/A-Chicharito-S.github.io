@@ -8,12 +8,12 @@
   "education": [
     {
       "institution": "Carnegie Mellon University",
-      "location": "Pittsburgh, United States",
+      "location": "Pittsburgh, U.S.",
       "url": "https://www.cmu.edu/",
       "area": "Computer Science",
       "studyType": "Master of Science in Intelligent Information Systems",
       "startDate": "2023-08-28",
-      "endDate": "present",
+      "endDate": "now",
       "score": "10",
       "courses": ["Probabilistic Graphical Models", "Multimodal Machine Learning"]
     },
