@@ -10,7 +10,7 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-I am a master's student at the Language Technologies Institute, Carnegie Mellon University. My current research focuses on AI for drug discovery. In particular, I am interested in molecule optimization and designing better neural models for molecules by leveraging their topological structures. 
+I am a master's student at the Language Technologies Institute, Carnegie Mellon University. My current research focuses on AI for drug discovery. In particular, I am interested in **molecule optimization** and **designing better neural models for molecules** by leveraging their topological structures. 
 
 I am fortunate to be working with Professor [Barnabás Póczos](https://www.cs.cmu.edu/~bapoczos/) on generative models for molecules. Additionally, I am interested in optimization and have the privilege of working with Professor [Xiaorui Liu](https://sites.google.com/ncsu.edu/xiaorui/home) on decentralized algorithms.
 
