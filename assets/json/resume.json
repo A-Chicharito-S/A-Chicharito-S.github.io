@@ -29,19 +29,6 @@
       "score": "10",
       "courses": ["Program Design and Algorithm Foundation", " Probability and Mathematical Statistics", "Calculus"]
     }
-  ],
-
-  "languages": [
-    {
-      "language": "Chinese",
-      "fluency": "Native speaker",
-      "icon": ""
-    },
-    {
-      "language": "English",
-      "fluency": "Fluent",
-      "icon": ""
-    }
   ]
 
 }
