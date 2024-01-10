@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-One paper was accepted by Findings of EMNLP 2022
+One paper is accepted by Findings of EMNLP 2022
