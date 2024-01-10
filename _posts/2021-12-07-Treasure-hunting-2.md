@@ -1,8 +1,10 @@
 ---
+layout: post
 title: Treasure Hunting 2
-categories:
-- Treasure Hunting
-feature_image: "https://picsum.photos/2560/600?image=872"
+date: 2021-12-07 16:40:16
+description: treasure hunting
+tags: formatting links
+categories: sample-posts
 ---
 <head>
     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
