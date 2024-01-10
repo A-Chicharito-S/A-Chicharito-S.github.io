@@ -1,8 +1,10 @@
 ---
+layout: post
 title: Paper Summary 2(special edition)
-categories:
-- Paper Summary
-feature_image: "https://picsum.photos/2560/600?image=872"
+date: 2021-11-17 16:40:16
+description: paper summary
+tags: formatting links
+categories: sample-posts
 ---
 <head>
     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
