@@ -10,9 +10,12 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-I am a master's student at the Language Technologies Institute, Carnegie Mellon University. My current research focuses on AI for drug discovery. In particular, I am interested in **molecule optimization** and **designing better neural models for molecules** by leveraging their topological structures. 
+I am a master’s student at the Language Technologies Institute, Carnegie Mellon University. My research aims to address the **efficiency & accuracy** challenges in science via AI, developing systematic methodologies at both **data & model** levels. Guided by this principle, I am interested in AI + drug discovery, particularly:
+1. **_from the data perspective_**: building general-purpose models from large-scale DNA/RNA data for target identification;
+2. **_from the model perspective_**: developing multimodal conditional generative models for lead optimization. 
+3. **_to advance ML_**: designing efficient & interpretable biology-informed ML algorithms by studying the computational patterns of the brain and cells.
 
-I am fortunate to be working with Professor [Barnabás Póczos](https://www.cs.cmu.edu/~bapoczos/) on generative models for molecules. Additionally, I am interested in optimization and have the privilege of working with Professor [Xiaorui Liu](https://sites.google.com/ncsu.edu/xiaorui/home) on decentralized algorithms.
+Currently, I am working with Professor [Aran Nayebi](https://anayebi.github.io/) on brain-inspired ML. I am fortunate to work with Professor [Barnabás Póczos](https://www.cs.cmu.edu/~bapoczos/) on generative models for molecules and with Professor [Leman Akoglu](https://www.andrew.cmu.edu/user/lakoglu/) on outlier detection for efficient discovery from scientific data. Additionally, I am interested in optimization and have the privilege of working with Professor [Xiaorui Liu](https://sites.google.com/ncsu.edu/xiaorui/home) on decentralized algorithms.
 
 
 During my undergraduate years, I concentrated on Natural Language Processing (NLP) and worked on summarization, few-shot sentiment analysis, and chatbots.
