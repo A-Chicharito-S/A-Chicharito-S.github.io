@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-One paper is accepted by Findings of EMNLP 2022
+One [paper](https://aclanthology.org/2022.findings-emnlp.177/) accepted by Findings of EMNLP 2022
