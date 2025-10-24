@@ -10,12 +10,12 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-I am a master’s student at the Language Technologies Institute, Carnegie Mellon University. My research aims to address the **efficiency & accuracy** challenges in science via AI, developing systematic methodologies at both **data & model** levels. Guided by this principle, I am interested in AI + drug discovery, particularly:
-1. **_from the data perspective_**: building general-purpose models from large-scale DNA/RNA data for target identification;
-2. **_from the model perspective_**: developing multimodal conditional generative models for lead optimization. 
-3. **_to advance ML_**: designing efficient & interpretable biology-informed ML algorithms by studying the computational patterns of the brain and cells.
+I am a first-year PhD student at the Machine Learning Department, Carnegie Mellon University. I am advised by Professor [Aran Nayebi](https://anayebi.github.io/), and I am interested in building capable, autonomous AI systems, with applications such as AI scientists, trading bots, personal assistants, etc. Guided by this goal, I am particularly interested in:
+   - **safety**: how do we build capable and safe AI systems? (e.g., a trading bot should know all the trading strategies, meanwhile avoiding illegal actions)
+   - **creativity**: how can the AI systems discover new patterns and strategies? (e.g., an AI scientist should be able to propose novel solutions for new scientific challenges)
+   - **memory**: how can we effectively augment AI systems to digest more information? (e.g., a personal assistant should be able to backtrack different daily conversations with the user)
 
-Currently, I am working with Professor [Aran Nayebi](https://anayebi.github.io/) on brain-inspired ML. I am fortunate to work with Professor [Barnabás Póczos](https://www.cs.cmu.edu/~bapoczos/) on generative models for molecules and with Professor [Leman Akoglu](https://www.andrew.cmu.edu/user/lakoglu/) on outlier detection for efficient discovery from scientific data. Additionally, I am interested in optimization and have the privilege of working with Professor [Xiaorui Liu](https://sites.google.com/ncsu.edu/xiaorui/home) on decentralized algorithms.
+During my master's, I was fortunate to work with Professor [Aran Nayebi](https://anayebi.github.io/) on brain-inspired ML, with Professor [Barnabás Póczos](https://www.cs.cmu.edu/~bapoczos/) on generative models for molecules, and with Professor [Leman Akoglu](https://www.andrew.cmu.edu/user/lakoglu/) on zero-shot outlier detection. Additionally, I was interested in optimization and had the privilege of working with Professor [Xiaorui Liu](https://sites.google.com/ncsu.edu/xiaorui/home) on decentralized algorithms.
 
 
 During my undergraduate years, I concentrated on Natural Language Processing (NLP) and worked on summarization, few-shot sentiment analysis, and chatbots.
