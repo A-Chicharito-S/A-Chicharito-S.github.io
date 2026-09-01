@@ -10,7 +10,7 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-I am a first-year PhD student at the Machine Learning Department, Carnegie Mellon University. I am advised by Professor [Aran Nayebi](https://anayebi.github.io/), and I am interested in building capable, autonomous AI systems, with applications such as AI scientists, trading bots, personal assistants, etc. Guided by this goal, I am particularly interested in:
+I am a second-year PhD student at the Machine Learning Department, Carnegie Mellon University. I am advised by Professor [Aran Nayebi](https://anayebi.github.io/), and I am interested in building capable, autonomous AI systems, with applications such as AI scientists, trading bots, personal assistants, etc. Guided by this goal, I am particularly interested in:
    - **safety**: how do we build capable and safe AI systems? (e.g., a trading bot should know all the trading strategies, meanwhile avoiding illegal actions)
    - **creativity**: how can the AI systems discover new patterns and strategies? (e.g., an AI scientist should be able to propose novel solutions for new scientific challenges)
    - **memory**: how can we effectively augment AI systems to digest more information? (e.g., a personal assistant should be able to backtrack different daily conversations with the user)
